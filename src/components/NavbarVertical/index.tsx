@@ -1,5 +1,6 @@
 import { useState } from "react";
 import logo from "../../assets/images/clinica_logo.svg";
+import { Link } from "react-router-dom";
 
 export default function NavBarVertical(){
     const [isExpanded, setIsExpanded] = useState(false);
@@ -18,45 +19,45 @@ export default function NavBarVertical(){
                     </button>
 
                     <div className="sidebar-logo">                       
-                        <a href="#"><img src={logo} alt="Clínica Saúde" /></a>                                         
+                        <Link to="/" ><img src={logo} alt="Clínica Saúde" /></Link>                                         
                     </div>
                 </div>
 
                 <ul className="sidebar-nav">
                     <li className="sidebar-item" data-toggle="tooltip" data-placement="right" title="Pacientes">
-                        <a href="#" className="sidebar-link">
+                        <Link to="/pacientes" className="sidebar-link">
                             <i className="bi bi-people-fill"></i>
                             <span>Pacientes</span>
-                        </a>
+                        </Link>
                     </li>
 
                     <li className="sidebar-item" data-toggle="tooltip" data-placement="right" title="Profissionais">
-                        <a href="#" className="sidebar-link">
+                        <Link to="/profissionais" className="sidebar-link">
                             <i className="bi bi-file-person"></i>
                             <span>Profissionais</span>
-                        </a>
+                        </Link>
                     </li>
 
                     <li className="sidebar-item" data-toggle="tooltip" data-placement="right" title="Agendamentos">
-                        <a href="#" className="sidebar-link">
+                        <Link to="/agendamentos" className="sidebar-link">
                             <i className="bi bi-calendar-date-fill"></i>
                             <span>Agendamentos</span>
-                        </a>
+                        </Link>
                     </li>
 
                     <li className="sidebar-item" data-toggle="tooltip" data-placement="right" title="Agenda">
-                        <a href="#" className="sidebar-link">
+                        <Link to="/agendamentos/agenda" className="sidebar-link">
                             <i className="bi bi-calendar-check-fill"></i>
                             <span>Agenda</span>
-                        </a>
+                        </Link>
                     </li>
                 </ul>
 
                 <div className="sidebar-footer" data-toggle="tooltip" data-placement="right" title="Logout">
-                    <a href="#" className="sidebar-link">
+                    <Link to="/login" className="sidebar-link">
                         <i className="bi bi-box-arrow-left"></i>
                         <span>Logout</span>
-                    </a>
+                    </Link>
                 </div>
             </aside>
         </>
