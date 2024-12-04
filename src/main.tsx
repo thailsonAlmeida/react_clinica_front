@@ -15,7 +15,7 @@ createRoot(document.getElementById('root')!).render(
                 <Route path="profissionais" element={<Professionals />} />            
                 <Route path="pacientes" element={<Patients />} />
                 <Route path="agendamentos" element={<Scheduling />} />
-                <Route path="agendamentos/agenda" element={<Agenda />} />                
+                <Route path="agendamentos/id" element={<Agenda />} />                
             </Route>
             <Route path="/login" element={<Auth />} />
         </Routes>        
