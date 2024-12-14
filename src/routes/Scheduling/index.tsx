@@ -1,72 +1,7 @@
 import NavBarHorizontalOne from "../../components/NavbarHorizantalOne";
 import NavBarHorizontalTwo from "../../components/NavbarHorizantalTwo";
-import { SchedulingDTO } from "../../models/scheduling";
+import * as schedulingService from "../../services/scheduling-service"
 
-const schedulings: SchedulingDTO[] = [
-    {
-       id: 100,
-       dateHour: "2024-09-10T08:00",
-       //isConfirmed: true,
-       //isPresent: true,
-       professional: {
-            id: 10,
-            name: "Luana Silva Assunção",
-            specialty: "Audiologia",
-            contact: "(15) 98965-7895",
-            schedulings: []
-       },
-       patient: {
-            id: 1,
-            name: "Sandro Almeida",
-            address: "Rua Canada, n45",
-            contact: "(15) 98546-2079",
-            birthDay: "10/08/1994",
-            reportHistory: []
-       }
-    },
-    {
-        id: 101,
-        dateHour: "2024-09-11T10:00",
-        //isConfirmed: true,
-        //isPresent: true,
-        professional: {
-            id: 12,
-            name: "Clara Almeida Teles",
-            specialty: "Linguagem",
-            contact: "(15) 94758-4656",
-            schedulings: []
-        },
-        patient: {
-            id: 2,
-            name: "Marina Silva",
-            address: "Rua Brazil, n121",
-            contact: "(15) 99653-1820",
-            birthDay: "20/07/1994",
-            reportHistory: []
-        }
-     },
-     {
-        id: 102,
-        dateHour: "2024-09-11T10:00",
-        //isConfirmed: true,
-        //isPresent: true,
-        professional: {
-            id: 13,
-            name: "Leticia Farias Assad",
-            specialty: "Voz",
-            contact: "(15) 99856-6985",
-            schedulings: []
-        },
-        patient: {
-            id: 3,
-            name: "Silvana Freitas",
-            address: "Rua Canada, n221",
-            contact: "(11) 99742-2731",
-            birthDay: "15/08/1990",
-            reportHistory: []
-        }
-     }
-]
 export default function Scheduling(){
     return(    
     <>
@@ -90,7 +25,7 @@ export default function Scheduling(){
                             </thead>
                             <tbody>
                                 {
-                                    schedulings.map(
+                                    schedulingService.findAll().map(
                                         i => (
                                             <tr>
                                             <td scope="row">{i.id}</td>

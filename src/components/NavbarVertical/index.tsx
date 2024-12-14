@@ -46,7 +46,7 @@ export default function NavBarVertical(){
                     </li>
 
                     <li className="sidebar-item" data-toggle="tooltip" data-placement="right" title="Agenda">
-                        <Link to="/agendamentos/id" className="sidebar-link">
+                        <Link to="profissionais/id" className="sidebar-link">
                             <i className="bi bi-calendar-check-fill"></i>
                             <span>Agenda</span>
                         </Link>

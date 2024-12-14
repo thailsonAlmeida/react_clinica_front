@@ -5,6 +5,12 @@ Desenvolvimento do frontend do projeto de trabalho de conclusão de curso, gest�
 - ReactJS
 - Figma
 
+# Bibliotecas
+- Axios
+```bat
+yarn add axios@0.27.2
+```
+
 # Protótipos
 ## Pacientes
 ## Profissionais

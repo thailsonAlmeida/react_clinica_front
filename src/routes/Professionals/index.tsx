@@ -1,30 +1,6 @@
 import NavBarHorizontalOne from "../../components/NavbarHorizantalOne";
 import NavBarHorizontalTwo from "../../components/NavbarHorizantalTwo";
-import { ProfessionalDTO } from "../../models/professional";
-
-const professionals: ProfessionalDTO[] = [
-    {
-        id: 10,
-        name: "Luana Silva Assunção",
-        specialty: "Audiologia",
-        contact: "(15) 98965-7895",
-        schedulings: []
-    },
-    {
-        id: 12,
-        name: "Clara Almeida Teles",
-        specialty: "Linguagem",
-        contact: "(15) 94758-4656",
-        schedulings: []
-    },
-    {
-        id: 13,
-        name: "Leticia Farias Assad",
-        specialty: "Voz",
-        contact: "(15) 99856-6985",
-        schedulings: []
-    }
-]
+import * as professionalService from "../../services/professional-service";
 
 export default function Professionals(){
     return(
@@ -48,7 +24,7 @@ export default function Professionals(){
                             <tbody>
                                 
                                 {
-                                    professionals.map(
+                                    professionalService.findAll().map(
                                         i => (
                                             <tr>
                                                 <td scope="row">{i.id}</td>
