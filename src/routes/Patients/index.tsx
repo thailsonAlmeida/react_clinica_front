@@ -1,5 +1,33 @@
 import NavBarHorizontalOne from "../../components/NavbarHorizantalOne";
 import NavBarHorizontalTwo from "../../components/NavbarHorizantalTwo";
+import { PatientDTO } from "../../models/patient";
+
+const patients: PatientDTO[] = [
+    {
+        id: 1,
+        name: "Sandro Almeida",
+        address: "Rua Canada, n45",
+        contact: "(15) 98546-2079",
+        birthDay: "10/08/1994",
+        reportHistory: []
+    },
+    {
+        id: 2,
+        name: "Marina Silva",
+        address: "Rua Brazil, n121",
+        contact: "(15) 99653-1820",
+        birthDay: "20/07/1994",
+        reportHistory: []
+    },
+    {
+        id: 3,
+        name: "Silvana Freitas",
+        address: "Rua Canada, n221",
+        contact: "(11) 99742-2731",
+        birthDay: "15/08/1990",
+        reportHistory: []
+    }  
+]
 
 export default function Patients(){
     return(
@@ -21,42 +49,22 @@ export default function Patients(){
                             <th scope="col">Ações</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                            <th scope="row">1</th>
-                            <td>Sandro Almeida</td>
-                            <td>Rua Canada, n45</td>
-                            <td>(15) 98546-2079</td>
-                            <td>
-                                <a href="#" className="link-dark me-2"><i className="bi bi-person-fill"></i></a>
-                                <a href="#" className="link-dark me-2"><i className="bi bi-pencil-square"></i></a>
-                                <a href="#" className="link-dark me-2"><i className="bi bi-trash-fill"></i></a>
-                            </td>
-                            </tr>
-
-                            <tr>
-                            <th scope="row">2</th>
-                            <td>Marina Silva</td>
-                            <td>Rua Brazil, n121</td>
-                            <td>(15) 99653-1820</td>
-                            <td>
-                                <a href="#" className="link-dark me-2"><i className="bi bi-person-fill"></i></a>
-                                <a href="#" className="link-dark me-2"><i className="bi bi-pencil-square"></i></a>
-                                <a href="#" className="link-dark me-2"><i className="bi bi-trash-fill"></i></a>
-                            </td>
-                            </tr> 
-
-                            <tr>
-                            <th scope="row">3</th>
-                            <td>Carlos Beltrão</td>
-                            <td>Rua Alaska, n361</td>
-                            <td>(15) 99845-1478</td>
-                            <td>
-                                <a href="#" className="link-dark me-2"><i className="bi bi-person-fill"></i></a>
-                                <a href="#" className="link-dark me-2"><i className="bi bi-pencil-square"></i></a>
-                                <a href="#" className="link-dark me-2"><i className="bi bi-trash-fill"></i></a>
-                            </td>
-                            </tr>                            
+                        <tbody>  
+                            {
+                                patients.map( i => 
+                                    <tr>
+                                        <td>{i.id}</td>
+                                        <td>{i.name}</td>
+                                        <td>{i.address}</td>
+                                        <td>{i.name}</td>
+                                        <td>
+                                            <a href="#" className="link-dark me-2"><i className="bi bi-person-fill"></i></a>
+                                            <a href="#" className="link-dark me-2"><i className="bi bi-pencil-square"></i></a>
+                                            <a href="#" className="link-dark me-2"><i className="bi bi-trash-fill"></i></a>
+                                        </td>
+                                    </tr>
+                                )
+                            }    
                         </tbody>
                     </table>
                 </div>                    
