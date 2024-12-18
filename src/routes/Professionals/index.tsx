@@ -1,8 +1,23 @@
+import { useEffect, useState } from "react";
 import NavBarHorizontalOne from "../../components/NavbarHorizantalOne";
 import NavBarHorizontalTwo from "../../components/NavbarHorizantalTwo";
 import * as professionalService from "../../services/professional-service";
+import { ProfessionalDTO } from "../../models/professional";
 
 export default function Professionals(){
+    
+
+    const [professionals, setProfessionals] = useState<ProfessionalDTO[]>([]);    
+
+    useEffect(() => {
+        professionalService.findAll()
+            .then(
+                response => {
+                setProfessionals(response.data.content);
+            }
+        );
+    }, [])   
+
     return(
         <>
             <div className="main">
@@ -24,9 +39,9 @@ export default function Professionals(){
                             <tbody>
                                 
                                 {
-                                    professionalService.findAll().map(
+                                    professionals.map(
                                         i => (
-                                            <tr>
+                                            <tr key={i.id}>
                                                 <td scope="row">{i.id}</td>
                                                 <td>{i.name}</td>
                                                 <td>{i.specialty}</td>

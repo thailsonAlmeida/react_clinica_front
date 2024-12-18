@@ -1,7 +1,9 @@
+import axios from "axios"
 import { SchedulingDTO } from "../models/scheduling"
+import { BASE_URL } from "../utils/system"
 
 export function findAll(){
-    return schedulings
+    return axios.get(`${BASE_URL}/agendamentos`);
 }
 
 export function findById(id : number) : SchedulingDTO | undefined{

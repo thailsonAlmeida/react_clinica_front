@@ -1,13 +1,25 @@
+import { useEffect, useState } from "react";
 import NavBarHorizontalOne from "../../components/NavbarHorizantalOne";
 import NavBarHorizontalTwo from "../../components/NavbarHorizantalTwo";
 import * as agendaService from "../../services/professional-service"
+import { ProfessionalDTO } from "../../models/professional";
 
 export default function Agenda(){
+    const [agenda, setAgenda] = useState<ProfessionalDTO>();
+    useEffect(() => {
+        agendaService.findById(Number(1))
+            .then( 
+                response => {
+                    console.log(response.data)
+                    setAgenda(response.data)
+                }
+            )
+    }, [])
     return(
     <>
         <div className="main">
             <NavBarHorizontalOne name="Agenda" />  
-            <NavBarHorizontalTwo name={agendaService.findById(1)?.name || ""} icon=""  />             
+            <NavBarHorizontalTwo name={String(agenda?.name) || ""} icon=""  />             
 
             <div className="p-3 ">
                 <div className="container p-3">
@@ -24,9 +36,9 @@ export default function Agenda(){
                         </thead>
                         <tbody>
                             {
-                                agendaService.findById(1)?.schedulings.map(
+                                agenda?.schedulings.map(
                                     i => (
-                                        <tr>
+                                        <tr key={i.id}>
                                             <td scope="row">{i.id}</td>
                                             <td>{i.patient.name}</td>
                                             <td>{i.dateHour.split("T")[0]}</td>

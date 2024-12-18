@@ -1,8 +1,21 @@
+import { useEffect, useState } from "react";
 import NavBarHorizontalOne from "../../components/NavbarHorizantalOne";
 import NavBarHorizontalTwo from "../../components/NavbarHorizantalTwo";
 import * as schedulingService from "../../services/scheduling-service"
+import { SchedulingDTO } from "../../models/scheduling";
 
 export default function Scheduling(){
+    const [schedulings, setSchedulings] = useState<SchedulingDTO[]>([]);
+
+    useEffect(() => {
+        schedulingService.findAll()
+            .then(
+                (response) => {                    
+                    setSchedulings(response.data.content);
+                }
+            )
+    }, []);
+
     return(    
     <>
         <div className="main">
@@ -25,9 +38,9 @@ export default function Scheduling(){
                             </thead>
                             <tbody>
                                 {
-                                    schedulingService.findAll().map(
+                                    schedulings.map(
                                         i => (
-                                            <tr>
+                                            <tr key={i.id}>
                                             <td scope="row">{i.id}</td>
                                             <td>{i.patient.name}</td>
                                             <td>{i.professional.name}</td>

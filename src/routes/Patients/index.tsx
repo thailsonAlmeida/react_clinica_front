@@ -1,10 +1,24 @@
+import { useEffect, useState } from "react";
 import NavBarHorizontalOne from "../../components/NavbarHorizantalOne";
 import NavBarHorizontalTwo from "../../components/NavbarHorizantalTwo";
 import * as patientsService from "../../services/patients-service";
+import { PatientDTO } from "../../models/patient";
 
-export default function Patients(){
-    return(
+export default function Patients(){    
+
+    const [patients, setPatients] = useState<PatientDTO[]>([]);
+
+    useEffect(() => {
+        patientsService.findAll()
+            .then(
+                response => {
+                    setPatients(response.data.content);
+                }
+            );
+    },[]);
     
+    
+    return(    
     <>
         <div className="main">
             <NavBarHorizontalOne name="Pacientes" />  
@@ -22,9 +36,9 @@ export default function Patients(){
                             </tr>
                         </thead>
                         <tbody> 
-                            {
-                                patientsService.findAll().map( i => 
-                                    <tr>
+                            {                     
+                                patients.map( i =>                                     
+                                    <tr key={i.id}>
                                         <td>{i.id}</td>
                                         <td>{i.name}</td>
                                         <td>{i.contact}</td>                                      
