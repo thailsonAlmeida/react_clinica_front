@@ -46,7 +46,7 @@ export default function Scheduling(){
                                             <td>{i.professional.name}</td>
                                             <td>{i.dateHour.split("T")[0]}</td>
                                             <td>{i.dateHour.split("T")[1]}</td>
-                                            <td>Sim</td>
+                                            <td>{i.confirmed === true ? "Sim" : "Não"}</td>
                                             <td>
                                                 <a href="#" className="link-dark me-2"><i className="bi bi-person-fill"></i></a>
                                                 <a href="#" className="link-dark me-2"><i className="bi bi-pencil-square"></i></a>

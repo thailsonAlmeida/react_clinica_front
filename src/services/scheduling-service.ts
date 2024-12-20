@@ -14,8 +14,8 @@ const schedulings: SchedulingDTO[] = [
     {
        id: 1,
        dateHour: "2024-09-10T08:00",
-       //isConfirmed: true,
-       //isPresent: true,
+       confirmed: true,
+       present: true,
        professional: {
             id: 10,
             name: "Luana Silva Assunção",
@@ -35,8 +35,8 @@ const schedulings: SchedulingDTO[] = [
     {
         id: 2,
         dateHour: "2024-09-11T10:00",
-        //isConfirmed: true,
-        //isPresent: true,
+        confirmed: true,
+        present: true,
         professional: {
             id: 12,
             name: "Clara Almeida Teles",
@@ -56,8 +56,8 @@ const schedulings: SchedulingDTO[] = [
      {
         id: 3,
         dateHour: "2024-09-11T10:00",
-        //isConfirmed: true,
-        //isPresent: true,
+        confirmed: true,
+        present: true,
         professional: {
             id: 13,
             name: "Leticia Farias Assad",
@@ -77,6 +77,8 @@ const schedulings: SchedulingDTO[] = [
         {
         id: 4,
         dateHour: "2024-11-11T13:14",
+        confirmed: true,
+        present: true,
         professional: {
         id: 2,
         name: "Clara Almeida Teles",
@@ -96,6 +98,8 @@ const schedulings: SchedulingDTO[] = [
         {
         id: 5,
         dateHour: "2024-11-13T07:14",
+        confirmed: true,
+        present: true,
         professional: {
         id: 3,
         name: "Leticia Farias Assad",
@@ -115,6 +119,8 @@ const schedulings: SchedulingDTO[] = [
         {
         id: 6,
         dateHour: "2024-11-14T08:14",
+        confirmed: true,
+        present: true,
         professional: {
         id: 4,
         name: "Leila Fagundes Silva",
@@ -134,6 +140,8 @@ const schedulings: SchedulingDTO[] = [
         {
         id: 7,
         dateHour: "2024-11-15T09:14",
+        confirmed: true,
+        present: true,
         professional: {
         id: 5,
         name: "Laura Pereira Beltrão",
