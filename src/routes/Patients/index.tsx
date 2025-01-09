@@ -43,7 +43,7 @@ export default function Patients(){
                                         <td>{i.name}</td>
                                         <td>{i.contact}</td>                                      
                                         <td>
-                                            <a href="#" className="link-dark me-2"><i className="bi bi-person-fill"></i></a>
+                                            <a href={"pacientes/" + i.id}className="link-dark me-2"><i className="bi bi-person-fill"></i></a>
                                             <a href="#" className="link-dark me-2"><i className="bi bi-pencil-square"></i></a>
                                             <a href="#" className="link-dark me-2"><i className="bi bi-trash-fill"></i></a>
                                         </td>
