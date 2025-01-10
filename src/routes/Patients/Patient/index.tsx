@@ -34,9 +34,8 @@ export default function Patient(){
                     
                     {
                         patient && <PatientDetails patient={patient} />                  
-                    }           
-                    
-                    
+                    }   
+
                 </div>
             </>
     );
