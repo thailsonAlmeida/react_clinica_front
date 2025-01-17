@@ -47,7 +47,12 @@ export default function Professionals(){
                                                 <td>{i.specialty}</td>
                                                 <td>{i.contact}</td>
                                                 <td>
-                                                    <a href={"professional/" + i.id} className="link-dark me-2"><i className="bi bi-person-fill"></i></a>
+                                                    <a 
+                                                        href={"profissionais/" + i.id} 
+                                                        title={"Ver mais sobre " + i.name}
+                                                        className="link-dark me-2">
+                                                            <i className="bi bi-person-fill"></i>
+                                                    </a>
                                                     <a href="#" className="link-dark me-2"><i className="bi bi-pencil-square"></i></a>
                                                     <a href="#" className="link-dark me-2"><i className="bi bi-trash-fill"></i></a>
                                                 </td>
