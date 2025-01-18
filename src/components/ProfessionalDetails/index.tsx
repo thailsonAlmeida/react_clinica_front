@@ -9,10 +9,10 @@ type Props = {
 
 export default function ProfessionalDetails({professional} : Props) {
     
-    const [selectedSchedulingPatient, setSelectedSchedulingPatient] = useState<PatientDTO | null>(null); // Estado para o relatório selecionado
+    const [selectedSchedulingPatient, setSelectedSchedulingPatient] = useState<PatientDTO | null>(null); 
 
-    const handleShowReport = (schedulingPatient: PatientDTO,) => {
-        setSelectedSchedulingPatient(schedulingPatient); // Armazena o relatório clicado
+    const handleShowReport = (schedulingPatient: PatientDTO) => {
+        setSelectedSchedulingPatient(schedulingPatient);
     };
 
     return(
@@ -69,11 +69,12 @@ export default function ProfessionalDetails({professional} : Props) {
                                             title={"Ver mais sobre agendamento " + i.id}
                                             className="link-dark me-2"  
                                             data-bs-toggle="modal" 
-                                            data-bs-target="#exampleModal"
+                                            data-bs-target="#modalAgendament"
                                             onClick={() => handleShowReport(i.patient)
                                             }
                                         >
-                                        <i className="bi bi-person-vcard-fill" /></a>
+                                        <i className="bi bi-person-vcard-fill" />
+                                        </a>
                                     </td>                                    
                                 </tr>
                             )
@@ -89,14 +90,15 @@ export default function ProfessionalDetails({professional} : Props) {
                                     
             </div>
 
-            <div className="modal fade" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id="modalAgendament" tabIndex={-1} aria-labelledby="modalAgendamentLabel" aria-hidden="true">
             <div className="modal-dialog modal-xl">
                 
                 <div className="modal-content">
                 
                 <div className="modal-header">
-                    <h5 className="modal-title" id="exampleModalLabel">
-                        {"Dados do Paciente"}
+                    <h5 className="modal-title" id="modalAgendamentLabel">
+                        <i className="bi bi-person-vcard-fill" />
+                        {" Paciente"}
                     </h5>
                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>

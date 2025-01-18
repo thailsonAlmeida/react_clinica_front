@@ -10,12 +10,12 @@ type Props = {
 
 export default function PatientDetails({patient} : Props) {
     
-    const [selectedReport, setSelectedReport] = useState<ReportDTO | null>(null); // Estado para o relatório selecionado
-    const [professionalReport, setProfessionalReport] = useState<ProfessionalDTO | null>(null); // Estado para o relatório selecionado
+    const [selectedReport, setSelectedReport] = useState<ReportDTO | null>(null); 
+    const [professionalReport, setProfessionalReport] = useState<ProfessionalDTO | null>(null); 
 
     const handleShowReport = (report: ReportDTO, professional: ProfessionalDTO) => {
-        setSelectedReport(report); // Armazena o relatório clicado
-        setProfessionalReport(professional); // Armazena o relatório clic
+        setSelectedReport(report); 
+        setProfessionalReport(professional); 
     };
 
     return(
@@ -70,11 +70,11 @@ export default function PatientDetails({patient} : Props) {
                                     <td>{i.reportType}</td>
                                     <td>
                                         <a 
-                                            href="#" 
+                                            href={"relatorio/" + i.id} 
                                             title="Ver relatório"
                                             className="link-dark me-2"  
                                             data-bs-toggle="modal" 
-                                            data-bs-target="#exampleModal"
+                                            data-bs-target="#modalReport"
                                             onClick={() => handleShowReport(i, i.professional)}
                                         >
                                         <i className="bi bi-file-earmark-text-fill" /></a>
@@ -93,13 +93,14 @@ export default function PatientDetails({patient} : Props) {
                                     
             </div>
 
-            <div className="modal fade" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id="modalReport" tabIndex={-1} aria-labelledby="modalReportLabel" aria-hidden="true">
             <div className="modal-dialog modal-xl">
                 
                 <div className="modal-content">
                 
                 <div className="modal-header">
-                    <h5 className="modal-title" id="exampleModalLabel">
+                    <h5 className="modal-title" id="modalReportLabel">
+                        <i className="bi bi-file-text-fill" /> <b/>
                         {selectedReport ? selectedReport.reportType : "Relatório"}
                     </h5>
                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -109,20 +110,28 @@ export default function PatientDetails({patient} : Props) {
                     {
                         selectedReport ? (
                             <>
+                                    
+                                    
+                                    <div className="row">
+                                        <div className="col">
+                                            <b>ID Relatório:</b> {selectedReport.id}
+                                        </div>    
+                                        <div className="col">
+                                            <b>Data:</b> {selectedReport.dateReport.split("T")[0]}
+                                        </div>                                      
+                                    </div>
+                                    <hr />
+                                    <div className="row">
+                                    <p><b>Descrição:</b> {selectedReport.description}</p> 
+                                    </div>
+                                    <hr />
                                     <div className="row">
                                         <div className="col">
                                             <b>Profissional:</b> {professionalReport?.name}
                                         </div>
                                         <div className="col">
                                             <b>Especialidade:</b> {professionalReport?.specialty}
-                                        </div>
-                                        <div className="col">
-                                            <b>Data:</b> {selectedReport.dateReport.split("T")[0]}
-                                        </div>                                        
-                                    </div>
-                                    <hr />
-                                    <div className="row">
-                                    <p><b>Descrição:</b> {selectedReport.description}</p> 
+                                        </div>                                       
                                     </div>
                                 <p></p>
                                                                
