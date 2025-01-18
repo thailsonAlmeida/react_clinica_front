@@ -3,6 +3,7 @@ import NavBarHorizontalOne from "../../components/NavbarHorizantalOne";
 import NavBarHorizontalTwo from "../../components/NavbarHorizantalTwo";
 import * as patientsService from "../../services/patients-service";
 import { PatientDTO } from "../../models/patient";
+import * as formats from "../../utils/formats";
 
 export default function Patients(){    
 
@@ -41,7 +42,7 @@ export default function Patients(){
                                     <tr key={i.id}>
                                         <td>{i.id}</td>
                                         <td>{i.name}</td>
-                                        <td>{i.contact}</td>                                      
+                                        <td>{formats.numberBr(i.contact)}</td>                                      
                                         <td>
                                             <a 
                                                 href={"pacientes/" + i.id}

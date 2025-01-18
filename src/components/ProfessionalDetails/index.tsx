@@ -2,6 +2,7 @@ import { useState } from "react";
 import perfil from "../../assets/images/perfil-user.png";
 import { ProfessionalDTO } from "../../models/professional";
 import { PatientDTO } from "../../models/patient";
+import * as formats from "../../utils/formats";
 
 type Props = {
     professional: ProfessionalDTO;
@@ -13,7 +14,7 @@ export default function ProfessionalDetails({professional} : Props) {
 
     const handleShowReport = (schedulingPatient: PatientDTO) => {
         setSelectedSchedulingPatient(schedulingPatient);
-    };
+    };    
 
     return(
         <>
@@ -34,7 +35,7 @@ export default function ProfessionalDetails({professional} : Props) {
 
                     <p>
                         <span><b>Contato</b></span><br />
-                        <span>{professional.contact}</span>
+                        <span>{formats.numberBr(professional.contact)}</span>
                     </p>                    
                 </div>   
                 
@@ -59,8 +60,8 @@ export default function ProfessionalDetails({professional} : Props) {
                         professional?.schedulings.map(
                             i => (
                                 <tr key={i.id}>
-                                    <td>{i.dateHour.split("T")[0]}</td>
-                                    <td>{i.dateHour.split("T")[1]}</td>
+                                    <td>{formats.dataBR(i.dateHour.split("T")[0])}</td>
+                                    <td>{formats.hourBr(i.dateHour.split("T")[1])}</td>
                                     <td>{i.patient.name}</td>
                                     <td>{i.confirmed == true ? "Sim" : "Não"}</td>
                                     <td>

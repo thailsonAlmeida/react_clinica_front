@@ -3,6 +3,7 @@ import NavBarHorizontalOne from "../../components/NavbarHorizantalOne";
 import NavBarHorizontalTwo from "../../components/NavbarHorizantalTwo";
 import * as professionalService from "../../services/professional-service";
 import { ProfessionalDTO } from "../../models/professional";
+import * as formats from "../../utils/formats";
 
 export default function Professionals(){
     
@@ -45,7 +46,7 @@ export default function Professionals(){
                                                 <td scope="row">{i.id}</td>
                                                 <td>{i.name}</td>
                                                 <td>{i.specialty}</td>
-                                                <td>{i.contact}</td>
+                                                <td>{formats.numberBr(i.contact)}</td>
                                                 <td>
                                                     <a 
                                                         href={"profissionais/" + i.id} 

@@ -3,7 +3,7 @@ import App from './App.tsx'
 import './index.css'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import Professionals from './routes/Professionals/index.tsx'
-import Agenda from './routes/Agenda/index.tsx'
+import Agenda from './routes/Schedulings/Scheduling/index.tsx'
 import Patients from './routes/Patients/index.tsx'
 import Auth from './routes/Auth/index.tsx'
 import Patient from './routes/Patients/Patient/index.tsx'
@@ -21,7 +21,7 @@ createRoot(document.getElementById('root')!).render(
                 <Route path="pacientes/:patientId" element={<Patient />} />
 
                 <Route path="agendamentos" element={<Schedulings />} />
-                <Route path="profissionais/id" element={<Agenda />} /> 
+                <Route path="agenda/:profissionalId" element={<Agenda />} /> 
             </Route>
             <Route path="*" element={<Navigate to="/login" />} /> 
             <Route path="/login" element={<Auth />} />

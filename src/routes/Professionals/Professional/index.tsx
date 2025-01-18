@@ -19,7 +19,6 @@ export default function Professional(){
     useEffect(() => {
         professionalService.findById(Number(params.profissionalId)).then(response => {
             setProfessional(response.data);
-            console.log(response.data);
        })
        .catch(() => {
             navigete("/profissionais");

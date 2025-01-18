@@ -5,6 +5,7 @@ import * as schedulingService from "../../services/scheduling-service"
 import { SchedulingDTO } from "../../models/scheduling";
 import { ProfessionalDTO } from "../../models/professional";
 import { PatientDTO } from "../../models/patient";
+import * as formats from "../../utils/formats";
 
 export default function Schedulings(){
     const [schedulings, setSchedulings] = useState<SchedulingDTO[]>([]);
@@ -54,8 +55,8 @@ export default function Schedulings(){
                                             <td scope="row">{i.id}</td>
                                             <td>{i.patient.name}</td>
                                             <td>{i.professional.name}</td>
-                                            <td>{i.dateHour.split("T")[0]}</td>
-                                            <td>{i.dateHour.split("T")[1]}</td>
+                                            <td>{formats.dataBR(i.dateHour.split("T")[0])}</td>
+                                            <td>{formats.hourBr(i.dateHour.split("T")[1])}</td>
                                             <td>{i.confirmed === true ? "Sim" : "Não"}</td>
                                             <td>
                                                 <a 

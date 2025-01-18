@@ -3,6 +3,7 @@ import perfil from "../../assets/images/perfil-user.png";
 import { PatientDTO } from "../../models/patient";
 import { ReportDTO } from "../../models/report";
 import { ProfessionalDTO } from "../../models/professional";
+import * as formats from "../../utils/formats";
 
 type Props = {
     patient: PatientDTO;
@@ -37,7 +38,7 @@ export default function PatientDetails({patient} : Props) {
 
                     <p>
                         <span><b>Contato</b></span><br />
-                        <span>{patient.contact}</span>
+                        <span>{formats.numberBr(patient.contact)}</span>
                     </p>
 
                     <p>
@@ -66,7 +67,7 @@ export default function PatientDetails({patient} : Props) {
                         patient?.reportHistory.map(
                             i => (
                                 <tr key={i.id}>
-                                    <td>{i.dateReport.split("T")[0]}</td>
+                                    <td>{formats.dataBR(i.dateReport.split("T")[0])}</td>
                                     <td>{i.reportType}</td>
                                     <td>
                                         <a 
@@ -117,7 +118,7 @@ export default function PatientDetails({patient} : Props) {
                                             <b>ID Relatório:</b> {selectedReport.id}
                                         </div>    
                                         <div className="col">
-                                            <b>Data:</b> {selectedReport.dateReport.split("T")[0]}
+                                            <b>Data:</b> {formats.dataBR(selectedReport.dateReport.split("T")[0])}
                                         </div>                                      
                                     </div>
                                     <hr />
