@@ -30,7 +30,7 @@ export default function Professional(){
         <>
                 <div className="main">
                     <NavBarHorizontalOne name="Profissional" />  
-                    <NavBarHorizontalTwo name=" " icon=" "  />  
+                    <NavBarHorizontalTwo />  
                     
                     {
                         professional && <ProfessionalDetails professional={professional} />                  

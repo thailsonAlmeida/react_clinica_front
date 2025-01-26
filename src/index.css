@@ -200,3 +200,12 @@ a.sidebar-link:hover {
     transition: all .2s ease-out;
 }
 
+.btn-theme{
+    background-color: var(--color-bg-secondary);
+    color: var(--color-bg-primary);
+}
+
+.btn-theme:hover{
+    background-color: #00a3a3;
+    color: var(--color-bg-primary);
+}
