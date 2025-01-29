@@ -1,6 +1,6 @@
 import { useState } from "react";
 import logo from "../../assets/images/clinica_logo.svg";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function NavBarVertical(){
     const [isExpanded, setIsExpanded] = useState(false);
@@ -19,45 +19,45 @@ export default function NavBarVertical(){
                     </button>
 
                     <div className="sidebar-logo">                       
-                        <Link to="/" ><img src={logo} alt="Clínica Saúde" /></Link>                                         
+                        <NavLink to="/" ><img src={logo} alt="Clínica Saúde" /></NavLink>                                         
                     </div>
                 </div>
 
                 <ul className="sidebar-nav">
                     <li className="sidebar-item" data-toggle="tooltip" data-placement="right" title="Pacientes">
-                        <Link to="/pacientes" className="sidebar-link">
+                        <NavLink to="/pacientes" className={({isActive}) => isActive ? "sidebar-link sidebar-link-active" : "sidebar-link"}>
                             <i className="bi bi-people-fill"></i>
                             <span>Pacientes</span>
-                        </Link>
+                        </NavLink>
                     </li>
 
                     <li className="sidebar-item" data-toggle="tooltip" data-placement="right" title="Profissionais">
-                        <Link to="/profissionais" className="sidebar-link">
+                        <NavLink to="/profissionais" className={({isActive}) => isActive ? "sidebar-link sidebar-link-active" : "sidebar-link"}>
                             <i className="bi bi-file-person"></i>
                             <span>Profissionais</span>
-                        </Link>
+                        </NavLink>
                     </li>
 
                     <li className="sidebar-item" data-toggle="tooltip" data-placement="right" title="Agendamentos">
-                        <Link to="/agendamentos" className="sidebar-link">
+                        <NavLink to="/agendamentos" className={({isActive}) => isActive ? "sidebar-link sidebar-link-active" : "sidebar-link"}>
                             <i className="bi bi-calendar-date-fill"></i>
                             <span>Agendamentos</span>
-                        </Link>
+                        </NavLink>
                     </li>
 
                     <li className="sidebar-item" data-toggle="tooltip" data-placement="right" title="Agenda">
-                        <Link to="/agenda/1" className="sidebar-link">
+                        <NavLink to="/agenda/1" className={({isActive}) => isActive ? "sidebar-link sidebar-link-active" : "sidebar-link"}>
                             <i className="bi bi-calendar-check-fill"></i>
                             <span>Agenda</span>
-                        </Link>
+                        </NavLink>
                     </li>
                 </ul>
 
                 <div className="sidebar-footer" data-toggle="tooltip" data-placement="right" title="Logout">
-                    <Link to="/login" className="sidebar-link">
+                    <NavLink to="/login" className="sidebar-link">
                         <i className="bi bi-box-arrow-left"></i>
                         <span>Logout</span>
-                    </Link>
+                    </NavLink>
                 </div>
             </aside>
         </>

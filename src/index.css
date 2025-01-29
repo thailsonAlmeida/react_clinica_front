@@ -161,6 +161,12 @@ a.sidebar-link:hover {
     transition-duration: 700ms;
 }
 
+.sidebar-link-active {
+    background-color: var(--color-bg-tertiary);
+    border-left: 5px solid var(--color-bg-secondary) !important;
+    transition-duration: 700ms;
+}
+
 .sidebar-item {
     position: relative;
 }
