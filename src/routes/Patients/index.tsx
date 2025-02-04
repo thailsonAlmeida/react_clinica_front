@@ -1,12 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import NavBarHorizontalOne from "../../components/NavbarHorizantalOne";
 import * as patientsService from "../../services/patients-service";
 import { PatientDTO } from "../../models/patient";
 import * as formats from "../../utils/formats";
 
+type FormData = {
+    name: string,
+    address: string,
+    contact: string,
+    birthDay: string,
+}
+
 export default function Patients(){    
 
     const [patients, setPatients] = useState<PatientDTO[]>([]);
+    const [selectedPatientId, setSelectedPatientId] = useState<number | null>(null);
   
     useEffect(() => {
         patientsService.findAll()
@@ -16,7 +25,56 @@ export default function Patients(){
                 }
             );
     },[]);
+
+    const [formData, setFormData] = useState<FormData>({
+        name: '',
+        address: '',
+        contact: '',
+        birthDay: '',
+    });
+
+    function handleInputChange(event : any) {
+        const value = event.target.value;
+        const name = event.target.name;
+        setFormData({...formData, [name]: value});
+    }
+
+    function handleUpdatePatient() {
+        if (selectedPatientId === null) {
+            alert("Erro: Nenhum paciente selecionado.");
+            return;
+        }
     
+        patientsService.update(selectedPatientId, formData)
+            .then(() => {
+                window.location.reload(); 
+            })
+            .catch(() => {
+                alert("Erro ao atualizar o paciente.");
+            });
+    }
+
+    function handleUnsubscribePatient(id: number){
+        patientsService.unsubscribePatient(id).then(() => {            
+            window.location.reload(); 
+        })
+        .catch((err) => {
+            alert(`${err.response.data.message}: Não é possivel descadastrar o usuário`);
+            window.location.reload(); 
+        });
+    }
+
+    function handlePostPatient() {
+        patientsService.post(formData)
+            .then(() => {
+                window.location.reload(); 
+            })
+            .catch(error => {
+                alert("Erro ao cadastrar o paciente. Verifique os dados e tente novamente.");
+                console.error(error);
+            });
+    }
+        
     return(    
     <>
         <div className="main">
@@ -65,6 +123,14 @@ export default function Patients(){
                                                 data-bs-toggle="modal" 
                                                 data-bs-target="#modalPatientPut"
                                                 className="link-dark me-2"
+                                                onClick={() => 
+                                                {setSelectedPatientId(i.id);
+                                                    setFormData({
+                                                    name: i.name,
+                                                    address: i.address,
+                                                    contact: i.contact,
+                                                    birthDay: formats.dateYYYYmmDD(i.birthDay.split('T')[0]),                                                                                                        
+                                                })}}
                                             >
                                                 <i className="bi bi-pencil-square"></i>
                                             </a>
@@ -72,6 +138,9 @@ export default function Patients(){
                                                 href="" 
                                                 title="Descadastrar Paciente"
                                                 className="link-dark me-2"
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#modalPatientUnsubscribe"
+                                                onClick={() => setSelectedPatientId(Number(i.id))}
                                             >
                                                 <i className="bi bi-trash-fill"></i>
                                             </a>
@@ -84,6 +153,8 @@ export default function Patients(){
                 </div>                    
             </div>
         </div>
+
+        
 
         <div className="modal fade" id="modalPatientPost" tabIndex={-1} aria-labelledby="modalPatientPostLabel" aria-hidden="true">
             <div className="modal-dialog modal-xl">
@@ -106,7 +177,9 @@ export default function Patients(){
                                 <input 
                                     type="text" 
                                     className="form-control" 
-                                    id="name" 
+                                    name="name" 
+                                    value={formData.name}
+                                    onChange={handleInputChange}
                                     placeholder="Nome completo"
                                     required
                                 />
@@ -116,7 +189,9 @@ export default function Patients(){
                                 <input 
                                     type="text" 
                                     className="form-control" 
-                                    id="address" 
+                                    name="address" 
+                                    value={formData.address}
+                                    onChange={handleInputChange}
                                     placeholder="Endereço"
                                     required
                                 />
@@ -126,7 +201,9 @@ export default function Patients(){
                                 <input 
                                     type="text" 
                                     className="form-control" 
-                                    id="contact" 
+                                    name="contact" 
+                                    value={formData.contact}
+                                    onChange={handleInputChange}
                                     placeholder="Telefone"
                                     required
                                 />
@@ -137,7 +214,9 @@ export default function Patients(){
                                 <input 
                                     type="date" 
                                     className="form-control" 
-                                    id="birthDay" 
+                                    name="birthDay" 
+                                    value={formData.birthDay}
+                                    onChange={handleInputChange}
                                     placeholder="Data de Nacimento"
                                     required
                                 />
@@ -149,7 +228,7 @@ export default function Patients(){
 
                 <div className="modal-footer">
                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" className="btn btn-theme">Cadastrar</button>
+                    <button type="button" className="btn btn-theme" onClick={handlePostPatient}>Cadastrar</button>
                 </div>
 
                 </div>
@@ -177,30 +256,39 @@ export default function Patients(){
                             <div className="mb-3">
                                 <input 
                                     type="text" 
+                                    name="name"
+                                    value={formData.name}
                                     className="form-control" 
                                     id="name" 
                                     placeholder="Nome completo"
                                     required
+                                    onChange={handleInputChange}
                                 />
                             </div>
 
                             <div className="mb-3">
                                 <input 
                                     type="text" 
+                                    name="address"
+                                    value={formData.address}
                                     className="form-control" 
                                     id="address" 
                                     placeholder="Endereço"
                                     required
+                                    onChange={handleInputChange}
                                 />
                             </div>
 
                             <div className="mb-3">
                                 <input 
                                     type="text" 
+                                    name="contact" 
+                                    value={formData.contact}
                                     className="form-control" 
                                     id="contact" 
                                     placeholder="Telefone"
                                     required
+                                    onChange={handleInputChange}
                                 />
                             </div>
 
@@ -208,10 +296,13 @@ export default function Patients(){
                                 <label htmlFor="name">Data de Nascimento</label>
                                 <input 
                                     type="date" 
+                                    name="birthDay"
+                                    value={formData.birthDay}
                                     className="form-control" 
                                     id="birthDay" 
                                     placeholder="Data de Nacimento"
                                     required
+                                    onChange={handleInputChange}
                                 />
                             </div>
                         </form>
@@ -221,7 +312,36 @@ export default function Patients(){
 
                 <div className="modal-footer">
                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" className="btn btn-theme">Cadastrar</button>
+                    <button 
+                        type="button" 
+                        className="btn btn-theme"
+                        onClick={handleUpdatePatient} 
+                        >Atualizar</button>
+                </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div className="modal fade" id="modalPatientUnsubscribe" tabIndex={-1} aria-labelledby="modalPatientUnsubscribeLabel" aria-hidden="true">
+            <div className="modal-dialog">
+                
+                <div className="modal-content">
+                
+                <div className="modal-header">
+                    <h5 className="modal-title" id="modalPatientUnsubscribeLabel">
+                        Deseja Descadastrar o cliente?
+                    </h5>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div className="modal-footer">
+                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                    <button 
+                        type="button" 
+                        className="btn btn-theme"
+                        onClick={() => handleUnsubscribePatient(Number(selectedPatientId))} 
+                        >Sim</button>
                 </div>
 
                 </div>

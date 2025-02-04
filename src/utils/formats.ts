@@ -9,3 +9,7 @@ export const hourBr = (hour : string) => {
 export const numberBr = (number : string) => {
     return number.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
 }
+
+export const dateYYYYmmDD = (number : string) => {
+    return number.replace(/(\d{2})\/(\d{2})\/(\d{4})/, "$3-$2-$1")
+}
