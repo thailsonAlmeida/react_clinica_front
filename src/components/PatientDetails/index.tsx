@@ -43,7 +43,7 @@ export default function PatientDetails({patient} : Props) {
 
                     <p>
                         <span><b>Nascimento</b></span><br />
-                        <span>{patient.birthDay}</span>
+                        <span>{formats.dataBR(patient.birthDay)}</span>
                     </p>
 
                 </div>   

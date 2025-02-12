@@ -7,7 +7,15 @@ export const hourBr = (hour : string) => {
 }
 
 export const numberBr = (number : string) => {
-    return number.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+    if (number.length === 10){
+        const cleanedNumber = number.replace(/\D/g, '');
+        const truncatedNumber = cleanedNumber.slice(0, 10);
+        return truncatedNumber.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+    }
+
+    const cleanedNumber = number.replace(/\D/g, '');
+    const truncatedNumber = cleanedNumber.slice(0, 11);
+    return truncatedNumber.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
 }
 
 export const dateYYYYmmDD = (number : string) => {

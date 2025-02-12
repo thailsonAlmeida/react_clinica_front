@@ -30,7 +30,7 @@ export default function Patient(){
         <>
                 <div className="main">
                     <NavBarHorizontalOne name="Paciente" />  
-                    <NavBarHorizontalTwo name=" " icon=" "  />  
+                    <NavBarHorizontalTwo />  
                     
                     {
                         patient && <PatientDetails patient={patient} />                  

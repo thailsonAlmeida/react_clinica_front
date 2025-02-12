@@ -59,7 +59,7 @@ export default function Patients(){
             window.location.reload(); 
         })
         .catch((err) => {
-            alert(`${err.response.data.message}: Não é possivel descadastrar o usuário`);
+            alert(`${err.response.data.message}: Não é possivel descadastrar o paciente`);
             window.location.reload(); 
         });
     }
@@ -67,6 +67,7 @@ export default function Patients(){
     function handlePostPatient() {
         patientsService.post(formData)
             .then(() => {
+                console.log(formData)
                 window.location.reload(); 
             })
             .catch(error => {
@@ -177,6 +178,7 @@ export default function Patients(){
                                 <input 
                                     type="text" 
                                     className="form-control" 
+                                    id="name" 
                                     name="name" 
                                     value={formData.name}
                                     onChange={handleInputChange}
@@ -189,6 +191,7 @@ export default function Patients(){
                                 <input 
                                     type="text" 
                                     className="form-control" 
+                                    id="address" 
                                     name="address" 
                                     value={formData.address}
                                     onChange={handleInputChange}
@@ -201,8 +204,9 @@ export default function Patients(){
                                 <input 
                                     type="text" 
                                     className="form-control" 
+                                    id="contact" 
                                     name="contact" 
-                                    value={formData.contact}
+                                    value={formats.numberBr(formData.contact)}
                                     onChange={handleInputChange}
                                     placeholder="Telefone"
                                     required
@@ -214,6 +218,7 @@ export default function Patients(){
                                 <input 
                                     type="date" 
                                     className="form-control" 
+                                    id="birthDay" 
                                     name="birthDay" 
                                     value={formData.birthDay}
                                     onChange={handleInputChange}

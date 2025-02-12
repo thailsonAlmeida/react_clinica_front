@@ -1,13 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import NavBarHorizontalOne from "../../components/NavbarHorizantalOne";
 import * as professionalService from "../../services/professional-service";
 import { ProfessionalDTO } from "../../models/professional";
 import * as formats from "../../utils/formats";
 
+type FormData = {
+    name: string,
+    specialty: string,
+    contact: string
+}
+
 export default function Professionals(){
     
 
-    const [professionals, setProfessionals] = useState<ProfessionalDTO[]>([]);    
+    const [professionals, setProfessionals] = useState<ProfessionalDTO[]>([]);   
+    const [selectedProfessionalId, setSelectedProfessionalId] = useState<number | null>(null); 
 
     useEffect(() => {
         professionalService.findAll()
@@ -17,6 +25,54 @@ export default function Professionals(){
             }
         );
     }, [])   
+
+    const [formData, setFormData] = useState<FormData>({
+            name: '',
+            specialty: '',
+            contact: '',
+        });
+
+    function handleInputChange(event : any) {
+        const value = event.target.value;
+        const name = event.target.name;
+        setFormData({...formData, [name]: value});
+    }
+
+    function handleUpdateProfessional() {
+            if (selectedProfessionalId === null) {
+                alert("Erro: Nenhum paciente selecionado.");
+                return;
+            }
+        
+            professionalService.update(selectedProfessionalId, formData)
+                .then(() => {
+                    window.location.reload(); 
+                })
+                .catch(() => {
+                    alert("Erro ao atualizar o paciente.");
+                });
+        }
+    
+    function handleUnsubscribeProfessional(idProfessional : number){
+        professionalService.unsubscribeProfessional(idProfessional).then(() => {
+            window.location.reload();
+        }).catch((err) => {
+            alert(`${err.response.data.message}: Não é possivel descadastrar o profisional`);
+            window.location.reload(); 
+        });
+    }
+
+    function handlePostProfessional() {
+            professionalService.post(formData)
+                .then(() => {
+                    console.log(formData)
+                    window.location.reload(); 
+                })
+                .catch(error => {
+                    alert("Erro ao cadastrar o profissional. Verifique os dados e tente novamente.");
+                    console.error(error);
+                });
+        }
 
     return(
         <>
@@ -30,8 +86,9 @@ export default function Professionals(){
                         data-bs-toggle="modal" 
                         data-bs-target="#modalProfessionalPost"
 
-                    >Cadastrar</a>
+                    >Cadastrar
                     <span> <i className="bi bi-person-plus-fill"></i></span>
+                    </a>
                 </nav>          
 
                 <div className="p-3 ">
@@ -63,14 +120,36 @@ export default function Professionals(){
                                                         className="link-dark me-2">
                                                             <i className="bi bi-person-fill"></i>
                                                     </a>
+                                                    
                                                     <a 
-                                                        href="#" 
+                                                        href={"profissionais/put/" + i.id} 
                                                         className="link-dark me-2"
                                                         title="Atualizar Dados do Profissional"
                                                         data-bs-toggle="modal" 
                                                         data-bs-target="#modalProfessionalPut"
-                                                    ><i className="bi bi-pencil-square"></i></a>
-                                                    <a href="" className="link-dark me-2"><i className="bi bi-trash-fill"></i></a>
+                                                        onClick={
+                                                            () => {
+                                                                setSelectedProfessionalId(i.id);
+                                                                setFormData({
+                                                                    name: i.name,
+                                                                    contact: i.contact,
+                                                                    specialty: i.specialty
+                                                                })
+                                                            }
+                                                        }
+                                                    >
+                                                        <i className="bi bi-pencil-square"></i>
+                                                    </a>
+                                                    
+                                                    <a 
+                                                        href="" 
+                                                        className="link-dark me-2"
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#modalProfessionalUnsubscribe"
+                                                        onClick={() => setSelectedProfessionalId(Number(i.id))}
+                                                    >
+                                                            <i className="bi bi-trash-fill" />
+                                                    </a>
                                                 </td>
                                             </tr>
                                         )
@@ -105,7 +184,10 @@ export default function Professionals(){
                                         type="text" 
                                         className="form-control" 
                                         id="name" 
+                                        name="name"
                                         placeholder="Nome completo"
+                                        onChange={handleInputChange}
+                                        value={formData.name}
                                         required
                                     />
                                 </div>
@@ -115,7 +197,10 @@ export default function Professionals(){
                                         type="text" 
                                         className="form-control" 
                                         id="specialty" 
+                                        name="specialty"
                                         placeholder="Especialidade"
+                                        onChange={handleInputChange}
+                                        value={formData.specialty}
                                         required
                                     />
                                 </div>
@@ -125,7 +210,10 @@ export default function Professionals(){
                                         type="text" 
                                         className="form-control" 
                                         id="contact" 
+                                        name="contact"
                                         placeholder="Telefone"
+                                        onChange={handleInputChange}
+                                        value={formats.numberBr(formData.contact)}
                                         required
                                     />
                                 </div>
@@ -136,7 +224,11 @@ export default function Professionals(){
 
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" className="btn btn-theme">Cadastrar</button>
+                            <button 
+                                type="button" 
+                                className="btn btn-theme"
+                                onClick={handlePostProfessional}                                
+                                >Cadastrar</button>
                         </div>
 
                     </div>
@@ -166,7 +258,10 @@ export default function Professionals(){
                                         type="text" 
                                         className="form-control" 
                                         id="name" 
+                                        name="name"
                                         placeholder="Nome completo"
+                                        value={formData.name}
+                                        onChange={handleInputChange}
                                         required
                                     />
                                 </div>
@@ -176,7 +271,10 @@ export default function Professionals(){
                                         type="text" 
                                         className="form-control" 
                                         id="specialty" 
+                                        name="specialty"
                                         placeholder="Especialidade"
+                                        value={formData.specialty}
+                                        onChange={handleInputChange}
                                         required
                                     />
                                 </div>
@@ -186,7 +284,10 @@ export default function Professionals(){
                                         type="text" 
                                         className="form-control" 
                                         id="contact" 
+                                        name="contact"
                                         placeholder="Telefone"
+                                        value={formats.numberBr(formData.contact)}
+                                        onChange={handleInputChange}
                                         required
                                     />
                                 </div>
@@ -197,12 +298,41 @@ export default function Professionals(){
 
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" className="btn btn-theme">Cadastrar</button>
+                            <button 
+                                type="button" 
+                                className="btn btn-theme"
+                                onClick={handleUpdateProfessional}
+                                >Atualizar</button>
                         </div>
 
                     </div>
                 </div>
             </div>
+
+            <div className="modal fade" id="modalProfessionalUnsubscribe" tabIndex={-1} aria-labelledby="modalProfessionalUnsubscribeLabel" aria-hidden="true">
+            <div className="modal-dialog">
+                
+                <div className="modal-content">
+                
+                <div className="modal-header">
+                    <h5 className="modal-title" id="modalProfessionalUnsubscribeLabel">
+                        Deseja Descadastrar o Profissional?
+                    </h5>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div className="modal-footer">
+                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                    <button 
+                        type="button" 
+                        className="btn btn-theme"
+                        onClick={() => handleUnsubscribeProfessional(Number(selectedProfessionalId))} 
+                        >Sim</button>
+                </div>
+
+                </div>
+            </div>
+        </div>
         </>
     
     );
