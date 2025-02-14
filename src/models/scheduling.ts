@@ -6,6 +6,7 @@ export type SchedulingDTO = {
     dateHour: string,
     confirmed: boolean,
     present: boolean,
+    cancel: boolean,
     professional: ProfessionalDTO,
     patient: PatientDTO
 }

@@ -1,0 +1,24 @@
+.card-number-theme {
+    font-size: 60px;
+    text-align: center;
+}
+
+.card-txt-center{
+    text-align: center;
+}
+
+.card-link-theme{
+    color: #4f4f4f;
+}
+
+.red-ico {
+    color: #e74c3c;
+  }
+
+.orange-ico {
+    color: #f1c40f;
+}
+
+.green-ico {
+    color: #27ae60;
+}

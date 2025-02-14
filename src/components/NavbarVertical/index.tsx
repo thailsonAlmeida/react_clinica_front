@@ -19,11 +19,18 @@ export default function NavBarVertical(){
                     </button>
 
                     <div className="sidebar-logo">                       
-                        <NavLink to="/" ><img src={logo} alt="Clínica Saúde" /></NavLink>                                         
+                        <NavLink to="/"><img src={logo} alt="Clínica Saúde" /></NavLink>                                         
                     </div>
                 </div>
 
                 <ul className="sidebar-nav">
+                    <li className="sidebar-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                        <NavLink to="/dash" className={({isActive}) => isActive ? "sidebar-link sidebar-link-active" : "sidebar-link"}>
+                            <i className="bi bi-grid-1x2-fill"></i>
+                            <span>DashBoard</span>
+                        </NavLink>
+                    </li>
+
                     <li className="sidebar-item" data-toggle="tooltip" data-placement="right" title="Pacientes">
                         <NavLink to="/pacientes" className={({isActive}) => isActive ? "sidebar-link sidebar-link-active" : "sidebar-link"}>
                             <i className="bi bi-people-fill"></i>

@@ -9,11 +9,14 @@ import Auth from './routes/Auth/index.tsx'
 import Patient from './routes/Patients/Patient/index.tsx'
 import Professional from './routes/Professionals/Professional/index.tsx'
 import Schedulings from './routes/Schedulings/index.tsx'
+import Dashboard from './routes/Dashboad/index.tsx'
 
 createRoot(document.getElementById('root')!).render(  
     <BrowserRouter>
         <Routes>
-            <Route path="/" element={<App />} >
+            <Route path="/" element={<App />} >            
+                <Route  index element={<Dashboard />}/>
+                <Route path="dash" element={<Dashboard />}/>
                 <Route path="profissionais" element={<Professionals />} /> 
                 <Route path="profissionais/:profissionalId" element={<Professional />} />
 
