@@ -48,7 +48,7 @@ export default function Dashboard(){
 
             <div className="row">
                 
-                <div className="col-4">
+                <div className="col-12 col-sm-6 col-md-4">
                     <div className="p-3 ">
                         <div className="container p-3">  
                             <div className="row">
@@ -71,7 +71,7 @@ export default function Dashboard(){
                     </div>
                 </div>
 
-                <div className="col-4">
+                <div className="col-12 col-sm-6 col-md-4">
                     <div className="p-3 ">
                         <div className="container p-3">   
                             <div className="row">
@@ -94,7 +94,7 @@ export default function Dashboard(){
                     </div>
                 </div>
 
-                <div className="col-4">
+                <div className="col-12 col-sm-6 col-md-4">
                     <div className="p-3 ">
                         <div className="container p-3">
                             <div className="row">
@@ -122,7 +122,7 @@ export default function Dashboard(){
 
             <div className="row">
 
-                <div className="col-4">
+                <div className="col-12 col-sm-6 col-md-4">
                     <div className="p-3 ">
                         <div className="container p-3">  
                             <div className="row">
@@ -145,7 +145,7 @@ export default function Dashboard(){
                     </div>
                 </div>
 
-                <div className="col-4">
+                <div className="col-12 col-sm-6 col-md-4">
                     <div className="p-3 ">
                         <div className="container p-3">    
                             <div className="row">

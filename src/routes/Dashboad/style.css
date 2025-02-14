@@ -22,3 +22,27 @@
 .green-ico {
     color: #27ae60;
 }
+
+/* Estilos para telas pequenas (como smartphones) */
+@media (max-width: 768px) {
+b {
+    font-size: 13px;
+}
+h1{
+    font-size: 20px;
+}
+.card-number-theme {
+    font-size: 30px;
+    text-align: center;
+}
+  }
+  
+  /* Estilos para telas muito pequenas (como smartphones em modo retrato) */
+  @media (max-width: 480px) {
+
+    .card-number-theme {
+        font-size: 40px;
+        text-align: center;
+    }
+
+  }
