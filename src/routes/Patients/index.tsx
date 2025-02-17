@@ -1,9 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import NavBarHorizontalOne from "../../components/NavbarHorizantalOne";
 import * as patientsService from "../../services/patients-service";
 import { PatientDTO } from "../../models/patient";
 import * as formats from "../../utils/formats";
+import SearchBar from "../../components/SearchBar";
+import ButtonNextPage from "../../components/ButtonNextPage";
 
 type FormData = {
     name: string,
@@ -12,19 +15,32 @@ type FormData = {
     birthDay: string,
 }
 
+type QueryParams = {
+    page : number,
+    name : string,
+}
+
 export default function Patients(){    
 
     const [patients, setPatients] = useState<PatientDTO[]>([]);
     const [selectedPatientId, setSelectedPatientId] = useState<number | null>(null);
+    const [isLastPage, setIsLastPage] = useState(false);
+    const [queryParams, setQueryParams] = useState<QueryParams>({
+        page: 0,
+        name: ""
+    });
+    
   
     useEffect(() => {
-        patientsService.findAll()
+        patientsService.findPageRequest(queryParams.page, queryParams.name)
             .then(
                 response => {
-                    setPatients(response.data.content);
+                    const nextPage = response.data.content;
+                    setPatients(patients.concat(nextPage));
+                    setIsLastPage(response.data.last)
                 }
             );
-    },[]);
+    },[queryParams]);
 
     const [formData, setFormData] = useState<FormData>({
         name: '',
@@ -75,6 +91,15 @@ export default function Patients(){
                 console.error(error);
             });
     }
+
+    function handleNextPageClick(){
+        setQueryParams({...queryParams, page: queryParams.page + 1});
+    }
+
+    function handleSearch(searchText: string){
+        setPatients([]);
+        setQueryParams({...queryParams, page: 0, name: searchText});
+    }
         
     return(    
     <>
@@ -93,8 +118,11 @@ export default function Patients(){
                 </a>
             </nav>         
 
-            <div className="p-3 ">
-                <div className="container p-3">
+            <div className="p-3 ">                
+                <div className="container p-3"> 
+                
+                    <SearchBar onSearch={handleSearch} />
+
                     <table className="table table-hover table-responsive">
                         <thead>
                             <tr>
@@ -151,6 +179,15 @@ export default function Patients(){
                             }    
                         </tbody>
                     </table>
+                    
+                    {
+                        !isLastPage &&
+                        <div onClick={handleNextPageClick}>
+                            <ButtonNextPage />
+                        </div>
+                    }
+                    
+                    
                 </div>                    
             </div>
         </div>
