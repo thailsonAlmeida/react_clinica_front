@@ -1,9 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import NavBarHorizontalOne from "../../components/NavbarHorizantalOne";
 import * as professionalService from "../../services/professional-service";
 import { ProfessionalDTO } from "../../models/professional";
 import * as formats from "../../utils/formats";
+import SearchBar from "../../components/SearchBar";
+import ButtonNextPage from "../../components/ButtonNextPage";
 
 type FormData = {
     name: string,
@@ -11,20 +14,32 @@ type FormData = {
     contact: string
 }
 
+type QueryParams = {
+    page : number,
+    name : string,
+}
+
 export default function Professionals(){
     
 
     const [professionals, setProfessionals] = useState<ProfessionalDTO[]>([]);   
     const [selectedProfessionalId, setSelectedProfessionalId] = useState<number | null>(null); 
+    const [queryParams, setQueryParams] = useState<QueryParams>({
+            page: 0,
+            name: ""
+        });
+    const [isLastPage, setIsLastPage] = useState(false);
 
     useEffect(() => {
-        professionalService.findAll()
+        professionalService.findPageRequest(queryParams.page, queryParams.name)
             .then(
                 response => {
-                setProfessionals(response.data.content);
+                const nextPage = response.data.content;
+                setProfessionals(professionals.concat(nextPage));
+                setIsLastPage(response.data.last);
             }
         );
-    }, [])   
+    }, [queryParams])   
 
     const [formData, setFormData] = useState<FormData>({
             name: '',
@@ -62,6 +77,11 @@ export default function Professionals(){
         });
     }
 
+    function handleSearch(searchText: string){
+        setProfessionals([]);
+        setQueryParams({...queryParams, page: 0, name: searchText});
+    }
+
     function handlePostProfessional() {
             professionalService.post(formData)
                 .then(() => {
@@ -73,6 +93,10 @@ export default function Professionals(){
                     console.error(error);
                 });
         }
+
+    function handleNextPageClick(){
+        setQueryParams({...queryParams, page: queryParams.page + 1});
+    }
 
     return(
         <>
@@ -93,6 +117,9 @@ export default function Professionals(){
 
                 <div className="p-3 ">
                     <div className="container p-3">
+                        
+                        <SearchBar onSearch={handleSearch} />
+                        
                         <table className="table table-hover table-responsive">
                             <thead>
                                 <tr>
@@ -158,6 +185,14 @@ export default function Professionals(){
                                                           
                             </tbody>
                         </table>
+
+                        {
+                            !isLastPage &&
+                            <div onClick={handleNextPageClick}>
+                                <ButtonNextPage />
+                            </div>
+                        }
+
                     </div>                    
                 </div>
             </div>

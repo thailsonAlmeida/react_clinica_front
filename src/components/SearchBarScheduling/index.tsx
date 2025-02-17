@@ -6,7 +6,7 @@ import { useState } from "react";
 type Props = {
     onSearch: Function;
 }
-export default function SearchBar({ onSearch }: Props){
+export default function SearchBarScheduling({ onSearch }: Props){
 
     const [text, setText] = useState("");
 
@@ -31,7 +31,7 @@ export default function SearchBar({ onSearch }: Props){
                 <button className="btn btn-outline-secondary" type="submit" id="button-addon2"><i className="bi bi-search" /></button>
                 <input 
                     value={text}
-                    type="text" 
+                    type="date" 
                     className="form-control" 
                     placeholder="Pesquisar" 
                     aria-label="Recipient's username" 

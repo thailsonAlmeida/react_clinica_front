@@ -5,25 +5,52 @@ import { SchedulingDTO } from "../../models/scheduling";
 import { ProfessionalDTO } from "../../models/professional";
 import { PatientDTO } from "../../models/patient";
 import * as formats from "../../utils/formats";
+import ButtonNextPage from "../../components/ButtonNextPage";
+
+type FormData = {
+    dateHour: string,
+    professional: ProfessionalDTO,
+    patient: PatientDTO,
+    present: boolean,
+    confirmed: boolean,
+    cancel: boolean,
+}
+
+type QueryParams = {
+    page : number,
+    name : string,
+}
 
 export default function Schedulings(){
     const [schedulings, setSchedulings] = useState<SchedulingDTO[]>([]);
-
-    useEffect(() => {
-        schedulingService.findAll()
-            .then(
-                (response) => {                    
-                    setSchedulings(response.data.content);
-                }
-            )
-    }, []);
-
     const [selectedPatient, setSelectedPatient] = useState<PatientDTO | null>(null);
     const [selectedProfessional, setSelectedProfessional] = useState<ProfessionalDTO | null>(null);
+    const [queryParams, setQueryParams] = useState<QueryParams>({
+        page: 0,
+        name: ""
+    });
+    const [isLastPage, setIsLastPage] = useState(false);
+
+    useEffect(() => {
+        schedulingService.findPageRequest(queryParams.page, queryParams.name)
+            .then(
+                (response) => {   
+                    const nextPage = response.data.content;                 
+                    setSchedulings(schedulings.concat(nextPage));
+                    setIsLastPage(response.data.last)
+                }
+            )
+    }, [queryParams]);
+
+    
 
     const handleShowScheduling = (professional: ProfessionalDTO, patient: PatientDTO) => {
         setSelectedPatient(patient);
         setSelectedProfessional(professional);
+    }    
+
+    function handleNextPageClick(){
+        setQueryParams({...queryParams, page: queryParams.page + 1});
     }
 
     return(    
@@ -45,6 +72,8 @@ export default function Schedulings(){
 
             <div className="p-3 ">
                 <div className="container p-3">
+
+
                         <table className="table table-hover table-responsive">
                             <thead>
                                 <tr>
@@ -99,6 +128,13 @@ export default function Schedulings(){
 
                             </tbody>
                         </table>
+
+                        {
+                            !isLastPage &&
+                            <div onClick={handleNextPageClick}>
+                                <ButtonNextPage />
+                            </div>
+                        }
                 </div>                    
             </div>
         </div>
