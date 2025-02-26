@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosRequestConfig } from "axios"
 import { SchedulingDTO } from "../models/scheduling"
 import { BASE_URL } from "../utils/system"
@@ -25,6 +26,18 @@ export function findPageRequest(page: number, name: string, size = 12, sort = "d
 
 export function findById(id : number) : SchedulingDTO | undefined{
     return schedulings.find(i => i.id === id)
+}
+
+export function update(schedulingId: number, data: any) {
+    return axios.put(`${BASE_URL}/agendamentos/${schedulingId}`, data);
+}
+
+export function cancelScheduling(schedulingId: number) {
+    return axios.delete(`${BASE_URL}/agendamentos/${schedulingId}`);
+}
+
+export function post(schedulingData: any) {
+    return axios.post(`${BASE_URL}/agendamentos`, schedulingData);
 }
 
 const schedulings: SchedulingDTO[] = [
