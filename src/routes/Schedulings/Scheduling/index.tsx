@@ -33,9 +33,9 @@ type FormDataSDcheduling = {
 
 export default function Scheduling(){
     const params = useParams();
-    const navigete = useNavigate();
-    
+    const navigete = useNavigate();    
     const [scheduling, setScheduling] = useState<ProfessionalDTO>();
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
     useEffect(() => {
         professionalService.findById(Number(params.profissionalId))
@@ -75,6 +75,16 @@ export default function Scheduling(){
         setFormData({...formData, [name]: value});
     }
  
+    function validateForm() {
+        const newErrors: { [key: string]: string } = {};
+    
+        if (!formData.dateReport) newErrors.dateReport = "A data é obrigatória!";
+        if (!formData.reportType) newErrors.reportType = "Selecione o tipo de relatório!";
+        if (!formData.description) newErrors.description = "O relato é obrigatória!";
+    
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0; // Retorna true se não houver erros
+    }
 
     const handleConfirmPresence = (id: number, thisScheduling: SchedulingDTO, thisProfessionalId: number) => {
         if (!scheduling) return;
@@ -172,6 +182,11 @@ export default function Scheduling(){
     };
 
     function handlePostReport(){
+        if (!validateForm()) {
+            alert("Preencha todos os campos obrigatórios.");
+            return;
+        }
+
         reportService.post(formData).then(
             () => {
                 window.location.reload(); 
@@ -298,7 +313,7 @@ export default function Scheduling(){
                                 <label htmlFor="dateHour">Data</label>
                                     <input 
                                         type="datetime-local" 
-                                        className="form-control" 
+                                        className={`form-control ${errors.dateReport ? 'is-invalid' : ''}`}
                                         id="dateHour" 
                                         name="dateHour"                                         
                                         value={formData.dateReport}
@@ -327,14 +342,15 @@ export default function Scheduling(){
                                 <select 
                                     id="reportType" 
                                     name="reportType" 
-                                    className="form-select" 
+                                    className={`form-select ${errors.reportType ? 'is-invalid' : ''}`} 
                                     onChange={handleInputChange}                                      
                                     value={formData.reportType}  
                                 >    
-                                    <option value="" disabled>Selecione um tipo</option>   
+                                    <option value="" disabled>Selecione o tipo de relatório</option>   
                                     <option value="Avaliativo">Avaliativo</option>  
                                     <option value="Evolutivo">Evolutivo</option>               
                                 </select>
+                                {errors.reportType && <div className="invalid-feedback">{errors.reportType}</div>} {/* Exibe a mensagem de erro */}
                                 
                             </div>
                             
@@ -342,13 +358,14 @@ export default function Scheduling(){
                             <div className="col mb-3">
                                 <label htmlFor="description">Relatar</label>
                                 <textarea  
-                                    className="form-control" 
+                                    className={`form-control ${errors.description ? 'is-invalid' : ''}`}
                                     id="description" 
                                     name="description" 
                                     value={formData.description}
                                     onChange={handleInputChange}
                                     required
                                 />
+                                {errors.description && <div className="invalid-feedback">{errors.description}</div>} {/* Exibe a mensagem de erro */}
                             </div>
 
                             

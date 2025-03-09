@@ -25,6 +25,7 @@ export default function Patients(){
     const [patients, setPatients] = useState<PatientDTO[]>([]);
     const [selectedPatientId, setSelectedPatientId] = useState<number | null>(null);
     const [isLastPage, setIsLastPage] = useState(false);
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [queryParams, setQueryParams] = useState<QueryParams>({
         page: 0,
         name: ""
@@ -49,6 +50,18 @@ export default function Patients(){
         birthDay: '',
     });
 
+    function validateForm() {
+        const newErrors: { [key: string]: string } = {};
+    
+        if (!formData.name) newErrors.name = "O nome é obrigatório!";
+        if (!formData.address) newErrors.address = "O endereço é obrigatório!";
+        if (!formData.contact) newErrors.contact = "O número de contato é obrigatório!";
+        if (!formData.birthDay) newErrors.birthDay = "A data de nascimento é obrigatório!";
+    
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0; // Retorna true se não houver erros
+    }
+
     function handleInputChange(event : any) {
         const value = event.target.value;
         const name = event.target.name;
@@ -56,6 +69,11 @@ export default function Patients(){
     }
 
     function handleUpdatePatient() {
+        if (!validateForm()) {
+            alert("Preencha todos os campos obrigatórios.");
+            return;
+        }
+
         if (selectedPatientId === null) {
             alert("Erro: Nenhum paciente selecionado.");
             return;
@@ -81,6 +99,11 @@ export default function Patients(){
     }
 
     function handlePostPatient() {
+        if (!validateForm()) {
+            alert("Preencha todos os campos obrigatórios.");
+            return;
+        }
+
         patientsService.post(formData)
             .then(() => {
                 console.log(formData)
@@ -192,8 +215,6 @@ export default function Patients(){
             </div>
         </div>
 
-        
-
         <div className="modal fade" id="modalPatientPost" tabIndex={-1} aria-labelledby="modalPatientPostLabel" aria-hidden="true">
             <div className="modal-dialog modal-xl">
                 
@@ -214,7 +235,7 @@ export default function Patients(){
                             <div className="mb-3">
                                 <input 
                                     type="text" 
-                                    className="form-control" 
+                                    className={`form-control ${errors.name ? 'is-invalid' : ''}`}
                                     id="name" 
                                     name="name" 
                                     value={formData.name}
@@ -222,12 +243,13 @@ export default function Patients(){
                                     placeholder="Nome completo"
                                     required
                                 />
+                                {errors.name && <div className="invalid-feedback">{errors.name}</div>} {/* Exibe a mensagem de erro */}
                             </div>
 
                             <div className="mb-3">
                                 <input 
                                     type="text" 
-                                    className="form-control" 
+                                    className={`form-control ${errors.address ? 'is-invalid' : ''}`}
                                     id="address" 
                                     name="address" 
                                     value={formData.address}
@@ -235,12 +257,13 @@ export default function Patients(){
                                     placeholder="Endereço"
                                     required
                                 />
+                                {errors.address && <div className="invalid-feedback">{errors.address}</div>} {/* Exibe a mensagem de erro */}
                             </div>
 
                             <div className="mb-3">
                                 <input 
                                     type="text" 
-                                    className="form-control" 
+                                    className={`form-control ${errors.contact ? 'is-invalid' : ''}`}
                                     id="contact" 
                                     name="contact" 
                                     value={formats.numberBr(formData.contact)}
@@ -248,13 +271,14 @@ export default function Patients(){
                                     placeholder="Telefone"
                                     required
                                 />
+                                {errors.contact && <div className="invalid-feedback">{errors.contact}</div>} {/* Exibe a mensagem de erro */}
                             </div>
 
                             <div className="mb-3">
                                 <label htmlFor="name">Data de Nascimento</label>
                                 <input 
                                     type="date" 
-                                    className="form-control" 
+                                    className={`form-control ${errors.birthDay ? 'is-invalid' : ''}`} 
                                     id="birthDay" 
                                     name="birthDay" 
                                     value={formData.birthDay}
@@ -262,6 +286,7 @@ export default function Patients(){
                                     placeholder="Data de Nacimento"
                                     required
                                 />
+                                {errors.birthDay && <div className="invalid-feedback">{errors.birthDay}</div>} {/* Exibe a mensagem de erro */}                                
                             </div>
                         </form>
                     
@@ -300,12 +325,13 @@ export default function Patients(){
                                     type="text" 
                                     name="name"
                                     value={formData.name}
-                                    className="form-control" 
+                                    className={`form-control ${errors.name ? 'is-invalid' : ''}`}
                                     id="name" 
                                     placeholder="Nome completo"
                                     required
                                     onChange={handleInputChange}
                                 />
+                                {errors.name && <div className="invalid-feedback">{errors.name}</div>} {/* Exibe a mensagem de erro */}
                             </div>
 
                             <div className="mb-3">
@@ -313,12 +339,13 @@ export default function Patients(){
                                     type="text" 
                                     name="address"
                                     value={formData.address}
-                                    className="form-control" 
+                                    className={`form-control ${errors.address ? 'is-invalid' : ''}`}
                                     id="address" 
                                     placeholder="Endereço"
                                     required
                                     onChange={handleInputChange}
                                 />
+                                {errors.address && <div className="invalid-feedback">{errors.address}</div>} {/* Exibe a mensagem de erro */}
                             </div>
 
                             <div className="mb-3">
@@ -326,12 +353,13 @@ export default function Patients(){
                                     type="text" 
                                     name="contact" 
                                     value={formData.contact}
-                                    className="form-control" 
+                                    className={`form-control ${errors.contact ? 'is-invalid' : ''}`} 
                                     id="contact" 
                                     placeholder="Telefone"
                                     required
                                     onChange={handleInputChange}
                                 />
+                                {errors.contact && <div className="invalid-feedback">{errors.contact}</div>} {/* Exibe a mensagem de erro */}
                             </div>
 
                             <div className="mb-3">
@@ -340,12 +368,13 @@ export default function Patients(){
                                     type="date" 
                                     name="birthDay"
                                     value={formData.birthDay}
-                                    className="form-control" 
+                                    className={`form-control ${errors.birthDay ? 'is-invalid' : ''}`}
                                     id="birthDay" 
                                     placeholder="Data de Nacimento"
                                     required
                                     onChange={handleInputChange}
                                 />
+                                {errors.birthDay && <div className="invalid-feedback">{errors.birthDay}</div>} {/* Exibe a mensagem de erro */}
                             </div>
                         </form>
                     

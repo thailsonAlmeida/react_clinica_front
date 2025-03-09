@@ -24,6 +24,7 @@ export default function Professionals(){
 
     const [professionals, setProfessionals] = useState<ProfessionalDTO[]>([]);   
     const [selectedProfessionalId, setSelectedProfessionalId] = useState<number | null>(null); 
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [queryParams, setQueryParams] = useState<QueryParams>({
             page: 0,
             name: ""
@@ -47,6 +48,17 @@ export default function Professionals(){
             contact: '',
         });
 
+    function validateForm() {
+        const newErrors: { [key: string]: string } = {};
+    
+        if (!formData.name) newErrors.name = "O nome é obrigatório!";
+        if (!formData.specialty) newErrors.specialty = "A especialidade é obrigatório!";
+        if (!formData.contact) newErrors.contact = "A o número de contato é obrigatório!";
+    
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0; // Retorna true se não houver erros
+    }
+
     function handleInputChange(event : any) {
         const value = event.target.value;
         const name = event.target.name;
@@ -54,6 +66,11 @@ export default function Professionals(){
     }
 
     function handleUpdateProfessional() {
+            if (!validateForm()) {
+                alert("Preencha todos os campos obrigatórios.");
+                return;
+            }
+
             if (selectedProfessionalId === null) {
                 alert("Erro: Nenhum paciente selecionado.");
                 return;
@@ -82,7 +99,12 @@ export default function Professionals(){
         setQueryParams({...queryParams, page: 0, name: searchText});
     }
 
-    function handlePostProfessional() {
+    function handlePostProfessional() {        
+            if (!validateForm()) {
+                alert("Preencha todos os campos obrigatórios.");
+                return;
+            }
+
             professionalService.post(formData)
                 .then(() => {
                     console.log(formData)
@@ -217,7 +239,7 @@ export default function Professionals(){
                                 <div className="mb-3">
                                     <input 
                                         type="text" 
-                                        className="form-control" 
+                                        className={`form-control ${errors.name ? 'is-invalid' : ''}`} 
                                         id="name" 
                                         name="name"
                                         placeholder="Nome completo"
@@ -225,12 +247,13 @@ export default function Professionals(){
                                         value={formData.name}
                                         required
                                     />
+                                    {errors.name && <div className="invalid-feedback">{errors.name}</div>} {/* Exibe a mensagem de erro */}
                                 </div>
 
                                 <div className="mb-3">
                                     <input 
                                         type="text" 
-                                        className="form-control" 
+                                        className={`form-control ${errors.specialty ? 'is-invalid' : ''}`} 
                                         id="specialty" 
                                         name="specialty"
                                         placeholder="Especialidade"
@@ -238,12 +261,13 @@ export default function Professionals(){
                                         value={formData.specialty}
                                         required
                                     />
+                                    {errors.specialty && <div className="invalid-feedback">{errors.specialty}</div>} {/* Exibe a mensagem de erro */}
                                 </div>
 
                                 <div className="mb-3">
                                     <input 
                                         type="text" 
-                                        className="form-control" 
+                                        className={`form-control ${errors.contact ? 'is-invalid' : ''}`} 
                                         id="contact" 
                                         name="contact"
                                         placeholder="Telefone"
@@ -251,6 +275,7 @@ export default function Professionals(){
                                         value={formats.numberBr(formData.contact)}
                                         required
                                     />
+                                    {errors.contact && <div className="invalid-feedback">{errors.contact}</div>} {/* Exibe a mensagem de erro */}
                                 </div>
                             </form>
                             
@@ -291,7 +316,7 @@ export default function Professionals(){
                                 <div className="mb-3">
                                     <input 
                                         type="text" 
-                                        className="form-control" 
+                                        className={`form-control ${errors.name ? 'is-invalid' : ''}`}
                                         id="name" 
                                         name="name"
                                         placeholder="Nome completo"
@@ -299,12 +324,13 @@ export default function Professionals(){
                                         onChange={handleInputChange}
                                         required
                                     />
+                                    {errors.name && <div className="invalid-feedback">{errors.name}</div>} {/* Exibe a mensagem de erro */}
                                 </div>
 
                                 <div className="mb-3">
                                     <input 
                                         type="text" 
-                                        className="form-control" 
+                                        className={`form-control ${errors.specialty ? 'is-invalid' : ''}`}
                                         id="specialty" 
                                         name="specialty"
                                         placeholder="Especialidade"
@@ -312,12 +338,13 @@ export default function Professionals(){
                                         onChange={handleInputChange}
                                         required
                                     />
+                                    {errors.specialty && <div className="invalid-feedback">{errors.specialty}</div>} {/* Exibe a mensagem de erro */}
                                 </div>
 
                                 <div className="mb-3">
                                     <input 
                                         type="text" 
-                                        className="form-control" 
+                                        className={`form-control ${errors.contact ? 'is-invalid' : ''}`}
                                         id="contact" 
                                         name="contact"
                                         placeholder="Telefone"
@@ -325,6 +352,7 @@ export default function Professionals(){
                                         onChange={handleInputChange}
                                         required
                                     />
+                                    {errors.contact && <div className="invalid-feedback">{errors.contact}</div>} {/* Exibe a mensagem de erro */}
                                 </div>
                             </form>
                             

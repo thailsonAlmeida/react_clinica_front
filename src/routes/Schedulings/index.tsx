@@ -30,6 +30,7 @@ export default function Schedulings(){
     const [professionals, setProfessionals] = useState<ProfessionalDTO[]>([]);
     const [patients, setPatients] = useState<PatientDTO[]>([]);
     const [selectedScheduling, setSelectedScheduling] = useState<SchedulingDTO | null>(null);// Store the entire scheduling object
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
     const [selectedPatient, setSelectedPatient] = useState<PatientDTO | null>(null);
     const [selectedProfessional, setSelectedProfessional] = useState<ProfessionalDTO | null>(null);
@@ -93,6 +94,17 @@ export default function Schedulings(){
         setQueryParams({...queryParams, page: queryParams.page + 1});
     }
 
+    function validateForm() {
+        const newErrors: { [key: string]: string } = {};
+    
+        if (!formData.dateHour) newErrors.dateHour = "A data é obrigatória!";
+        if (!formData.professional.id) newErrors.professional = "Selecionar um profissional é obrigatório!";
+        if (!formData.patient.id) newErrors.patient = "Selecionar um paciente é obrigatório!";
+    
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0; // Retorna true se não houver erros
+    }
+
     function handleInputChange(event: any) {
         const { name, value } = event.target;
     
@@ -108,29 +120,34 @@ export default function Schedulings(){
          else {
           setFormData({ ...formData, [name]: value });
         }
-      } 
+    } 
 
     function handleUpdateScheduling() {
-    if (!selectedScheduling) {
-        alert("Erro: Nenhum agendamento selecionado.");
-        return;
-    }
+        if (!validateForm()) {
+            alert("Preencha todos os campos obrigatórios.");
+            return;
+        }
 
-    const updatedScheduling = {
-        ...selectedScheduling, // Spread existing scheduling data
-        ...formData, // Override with form data
-        confirmed: formData.confirmed, // Use boolean values
-        cancel: formData.cancel,
-        present: formData.present
-    };
+        if (!selectedScheduling) {
+            alert("Erro: Nenhum agendamento selecionado.");
+            return;
+        }
 
-    schedulingService.update(selectedScheduling.id, updatedScheduling) // Use selectedScheduling.id
-        .then(() => {
-        window.location.reload();
-        })
-        .catch(() => {
-        alert("Erro ao atualizar o agendamento.");
-        });
+        const updatedScheduling = {
+            ...selectedScheduling, // Spread existing scheduling data
+            ...formData, // Override with form data
+            confirmed: formData.confirmed, // Use boolean values
+            cancel: formData.cancel,
+            present: formData.present
+        };
+
+        schedulingService.update(selectedScheduling.id, updatedScheduling) // Use selectedScheduling.id
+            .then(() => {
+            window.location.reload();
+            })
+            .catch(() => {
+            alert("Erro ao atualizar o agendamento.");
+            });
     }
 
     function handleCancelScheduling(id: number) {
@@ -162,19 +179,23 @@ export default function Schedulings(){
           confirmed: scheduling.confirmed,
           cancel: scheduling.cancel,
         });
-      };
+    };
 
     function handlePostScheduling() {
-            schedulingService.post(formData)
-                .then(() => {
-                    console.log(formData)
-                    window.location.reload(); 
-                })
-                .catch(error => {
-                    alert("Erro ao cadastrar realizar o agendamento. Verifique os dados e tente novamente.");
-                    console.error(error);
-                });
+        if (!validateForm()) {
+            alert("Preencha todos os campos obrigatórios.");
+            return;
         }
+        schedulingService.post(formData)
+            .then(() => {
+                console.log(formData)
+                window.location.reload(); 
+            })
+            .catch(error => {
+                alert("Erro ao cadastrar realizar o agendamento. Verifique os dados e tente novamente.");
+                console.error(error);
+            });
+    }
 
     return(    
     <>
@@ -368,13 +389,14 @@ export default function Schedulings(){
                                 <label htmlFor="date">Defina a data e horarío</label>
                                 <input 
                                     type="datetime-local" 
-                                    className="form-control" 
+                                    className={`form-select ${errors.dateHour ? 'is-invalid' : ''}`}  
                                     id="dateHour" 
                                     name="dateHour" 
                                     value={formData.dateHour}
                                     onChange={handleInputChange}
                                     required
                                 />
+                                {errors.dateHour && <div className="invalid-feedback">{errors.dateHour}</div>} {/* Exibe a mensagem de erro */}
                             </div>
 
                             <div className="mb-3 col">
@@ -382,7 +404,7 @@ export default function Schedulings(){
                                     <select 
                                         id="patient" 
                                         name="patient" 
-                                        className="form-select" 
+                                        className={`form-select ${errors.patient ? 'is-invalid' : ''}`}  
                                         onChange={handleInputChange}                                        
                                         value={formData.patient.id} required>  
                                         <option value="">Selecione o paciente</option>                                     
@@ -394,6 +416,7 @@ export default function Schedulings(){
                                             ))
                                         }
                                     </select>
+                                    {errors.patient && <div className="invalid-feedback">{errors.patient}</div>} {/* Exibe a mensagem de erro */}
                                 </div>
 
                             <div className="row">                                    
@@ -403,7 +426,7 @@ export default function Schedulings(){
                                     <select 
                                         id="professional" 
                                         name="professional" 
-                                        className="form-select" 
+                                        className={`form-select ${errors.professional ? 'is-invalid' : ''}`} 
                                         onChange={handleInputChange}                                        
                                         value={formData.professional.id} required>   
                                         <option value="">Selecione o profissional</option>
@@ -416,6 +439,7 @@ export default function Schedulings(){
                                             ))
                                         }
                                     </select>
+                                    {errors.professional && <div className="invalid-feedback">{errors.professional}</div>} {/* Exibe a mensagem de erro */}
                                 </div>
 
                             </div>
@@ -456,13 +480,14 @@ export default function Schedulings(){
                                     <label htmlFor="date">Defina a data e horarío</label>
                                     <input 
                                         type="datetime-local" 
-                                        className="form-control" 
+                                        className={`form-select ${errors.dateHour ? 'is-invalid' : ''}`}
                                         id="dateHour" 
                                         name="dateHour" 
                                         value={formData.dateHour}
                                         onChange={handleInputChange}
                                         required
                                     />
+                                    {errors.dateHour && <div className="invalid-feedback">{errors.dateHour}</div>} {/* Exibe a mensagem de erro */}
                                 </div>
 
                                     <div className="mb-3 col">
