@@ -120,6 +120,17 @@ export default function Professionals(){
         setQueryParams({...queryParams, page: queryParams.page + 1});
     }
 
+    function handleClearForm(){
+        setFormData({
+            name: '',
+            specialty: '',
+            contact: '',
+        })
+        setErrors({
+            
+        })
+    }
+
     return(
         <>
             <div className="main">
@@ -229,7 +240,7 @@ export default function Professionals(){
                                 <i className="bi bi-person-fill" /> <b/>
                                 {"Cadastrar Profissional"}
                             </h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={handleClearForm}></button>
                         </div>
 
                         <div className="modal-body"> 
@@ -283,7 +294,7 @@ export default function Professionals(){
                         </div>
 
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleClearForm}>Cancelar</button>
                             <button 
                                 type="button" 
                                 className="btn btn-theme"
@@ -306,7 +317,7 @@ export default function Professionals(){
                                 <i className="bi bi-person-fill" /> <b/>
                                 {"Atualizar Dados do Profissional"}
                             </h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={handleClearForm}></button>
                         </div>
 
                         <div className="modal-body"> 
@@ -360,7 +371,7 @@ export default function Professionals(){
                         </div>
 
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleClearForm}>Cancelar</button>
                             <button 
                                 type="button" 
                                 className="btn btn-theme"

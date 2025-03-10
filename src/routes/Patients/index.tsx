@@ -123,6 +123,18 @@ export default function Patients(){
         setPatients([]);
         setQueryParams({...queryParams, page: 0, name: searchText});
     }
+
+    function handleClearForm(){
+        setFormData({
+            name: '',
+            address: '',
+            birthDay: '',
+            contact: '',
+        })
+        setErrors({
+            
+        })
+    }
         
     return(    
     <>
@@ -225,7 +237,7 @@ export default function Patients(){
                         <i className="bi bi-person-fill" /> <b/>
                         {"Cadastrar Paciente"}
                     </h5>
-                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={handleClearForm}></button>
                 </div>
 
                 <div className="modal-body"> 
@@ -294,7 +306,7 @@ export default function Patients(){
                 </div>
 
                 <div className="modal-footer">
-                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleClearForm}>Cancelar</button>
                     <button type="button" className="btn btn-theme" onClick={handlePostPatient}>Cadastrar</button>
                 </div>
 
@@ -313,7 +325,7 @@ export default function Patients(){
                         <i className="bi bi-person-fill" /> <b/>
                         {"Atualizar Dados do Paciente"}
                     </h5>
-                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={handleClearForm}></button>
                 </div>
 
                 <div className="modal-body"> 
@@ -382,7 +394,12 @@ export default function Patients(){
                 </div>
 
                 <div className="modal-footer">
-                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button 
+                        type="button" 
+                        className="btn btn-secondary" 
+                        data-bs-dismiss="modal"
+                        onClick={handleClearForm}
+                        >Cancelar</button>
                     <button 
                         type="button" 
                         className="btn btn-theme"

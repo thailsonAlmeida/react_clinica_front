@@ -83,8 +83,6 @@ export default function Schedulings(){
             cancel: false,
         });
 
-    
-
     const handleShowScheduling = (professional: ProfessionalDTO, patient: PatientDTO) => {
         setSelectedPatient(patient);
         setSelectedProfessional(professional);
@@ -179,7 +177,7 @@ export default function Schedulings(){
           confirmed: scheduling.confirmed,
           cancel: scheduling.cancel,
         });
-    };
+    }
 
     function handlePostScheduling() {
         if (!validateForm()) {
@@ -195,6 +193,33 @@ export default function Schedulings(){
                 alert("Erro ao cadastrar realizar o agendamento. Verifique os dados e tente novamente.");
                 console.error(error);
             });
+    }
+
+    function handleClearForm(){
+        setFormData({
+            dateHour: '',
+            professional: {
+                id: 0,
+                name: '',
+                specialty: '',
+                contact: '',
+                schedulings: []
+            },
+            patient: {
+                id: 0,
+                name: '',
+                address: '',
+                contact: '',
+                birthDay: '',
+                reportHistory: []  
+            },
+            present: false,
+            confirmed: false,
+            cancel: false,
+        })
+        setErrors({
+            
+        })
     }
 
     return(    
@@ -377,12 +402,10 @@ export default function Schedulings(){
                         <span> <i className="bi bi-calendar-event-fill" /> </span>
                             {"Agendar"}
                         </h5>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={handleClearForm}></button>
                     </div>
 
                     <div className="modal-body"> 
-
-                        
                         <form>
 
                             <div className="col mb-3">
@@ -417,7 +440,7 @@ export default function Schedulings(){
                                         }
                                     </select>
                                     {errors.patient && <div className="invalid-feedback">{errors.patient}</div>} {/* Exibe a mensagem de erro */}
-                                </div>
+                            </div>
 
                             <div className="row">                                    
                                 
@@ -444,13 +467,11 @@ export default function Schedulings(){
 
                             </div>
                             
-                        </form>
-                        
-                                            
+                        </form>              
                     </div>
 
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleClearForm}>Cancelar</button>
                         <button type="button" className="btn btn-theme" onClick={handlePostScheduling}>Agendar</button>
                     </div>
 
@@ -468,7 +489,7 @@ export default function Schedulings(){
                         <span> <i className="bi bi-calendar-event-fill" /> </span>
                             {"Agendar"}
                         </h5>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={handleClearForm}></button>
                     </div>
 
                     <div className="modal-body"> 
@@ -546,7 +567,7 @@ export default function Schedulings(){
                     </div>
 
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleClearForm}>Cancelar</button>
                         <button 
                             type="button" 
                             className="btn btn-theme"

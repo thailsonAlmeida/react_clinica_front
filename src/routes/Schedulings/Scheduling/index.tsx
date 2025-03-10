@@ -67,7 +67,7 @@ export default function Scheduling(){
             birthDay: '',
             reportHistory: []  
         },                
-    });
+    })
 
     function handleInputChange(event : any) {
         const value = event.target.value;
@@ -179,7 +179,7 @@ export default function Scheduling(){
 
         }
         
-    };
+    }
 
     function handlePostReport(){
         if (!validateForm()) {
@@ -213,9 +213,35 @@ export default function Scheduling(){
           professional: {...scheduling.professional, id:professional.id, name:professional.name},
           patient: scheduling.patient,          
         });
-      };
+    }
+
+    function handleClearForm(){
+        setFormData({
+            dateReport: '',
+            reportType:'',
+            description: '',
+            professional: {
+                id: 0,
+                name: '',
+                specialty: '',
+                contact: '',
+                schedulings: []
+            },
+            patient: {
+                id: 0,
+                name: '',
+                address: '',
+                contact: '',
+                birthDay: '',
+                reportHistory: []  
+            },  
+        })
+        setErrors({
+            
+        })
+    }
    
-     return(
+    return(
     <>
         <div className="main">
             <NavBarHorizontalOne name="Agenda" />  
@@ -301,14 +327,11 @@ export default function Scheduling(){
                         <span> <i className="bi bi-calendar-event-fill" /> </span>
                             {"Relatório"}
                         </h5>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={handleClearForm}></button>
                     </div>
 
                     <div className="modal-body"> 
-
-                        
                         <form>
-
                             <div className="col mb-3">
                                 <label htmlFor="dateHour">Data</label>
                                     <input 
@@ -354,7 +377,6 @@ export default function Scheduling(){
                                 
                             </div>
                             
-
                             <div className="col mb-3">
                                 <label htmlFor="description">Relatar</label>
                                 <textarea  
@@ -368,10 +390,7 @@ export default function Scheduling(){
                                 {errors.description && <div className="invalid-feedback">{errors.description}</div>} {/* Exibe a mensagem de erro */}
                             </div>
 
-                            
-
-                            <div className="row">                                    
-                                
+                            <div className="row">
                                 <div className="mb-3 col">
                                     <label htmlFor="professional">Profissional</label>
                                     <select 
@@ -385,16 +404,12 @@ export default function Scheduling(){
                                         <option>{formData.professional.name}</option>
                                     </select>
                                 </div>
-
                             </div>
-                            
-                        </form>
-                        
-                                            
+                        </form>                
                     </div>
 
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleClearForm}>Cancelar</button>
                         <button type="button" className="btn btn-theme" onClick={handlePostReport}>Relatar</button>
                     </div>
 
