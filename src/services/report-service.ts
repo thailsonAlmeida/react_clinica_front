@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios from "axios";
-import { BASE_URL } from "../utils/system";
+import { AxiosRequestConfig } from "axios";
+import { requestBackend } from "../utils/requests";
 
 export function post(reportData: any) {
-    return axios.post(`${BASE_URL}/relatorios`, reportData);
+    const config : AxiosRequestConfig = {
+            method: "POST",
+            url: `/relatorios`,
+            data: reportData,
+            withCredentials: true
+        }
+        return requestBackend(config);
 }

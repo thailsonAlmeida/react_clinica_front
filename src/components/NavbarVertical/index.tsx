@@ -1,12 +1,17 @@
 import { useState } from "react";
 import logo from "../../assets/images/clinica_logo.svg";
 import { NavLink } from "react-router-dom";
+import * as localStorage from "../../localstorage/access-token-repository"
 
 export default function NavBarVertical(){
     const [isExpanded, setIsExpanded] = useState(false);
 
     const toggleSidebar = () => {
       setIsExpanded(!isExpanded); // Alterna o valor entre true/false
+    };
+
+    const logouf = () => {
+        localStorage.remove()
     };
 
     return(
@@ -61,7 +66,7 @@ export default function NavBarVertical(){
                 </ul>
 
                 <div className="sidebar-footer" data-toggle="tooltip" data-placement="right" title="Logout">
-                    <NavLink to="/login" className="sidebar-link">
+                    <NavLink to="/login" className="sidebar-link" onClick={logouf}>
                         <i className="bi bi-box-arrow-left"></i>
                         <span>Logout</span>
                     </NavLink>

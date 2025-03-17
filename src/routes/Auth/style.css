@@ -34,10 +34,12 @@
 
 .auth-btn-theme{
     background-color: #0b0c0c;
+    color: #fff;
 }
 
 .auth-btn-theme:hover{    
     background-color: #028C8C;
+    color: #fff;
 }
 
 .auth-btn-theme:active{
@@ -53,6 +55,3 @@
     border: none;
     background-color: #028C8C;
 }
-
-
-
