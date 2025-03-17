@@ -1,0 +1,10 @@
+::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+.login-name{
+    font-size: 12px;
+}

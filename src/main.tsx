@@ -17,7 +17,7 @@ createRoot(document.getElementById('root')!).render(
     <HistoryRouter history={history}>
         <Routes>
             <Route path="/" element={<App />} >            
-                <Route  index element={<Dashboard />}/>
+                <Route  index element={<Auth />}/>
                 <Route path="dash" element={<Dashboard />}/>
                 <Route path="profissionais" element={<Professionals />} /> 
                 <Route path="profissionais/:profissionalId" element={<Professional />} />
