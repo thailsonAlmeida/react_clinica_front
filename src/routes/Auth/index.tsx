@@ -42,12 +42,12 @@ export default function Auth() {
       return;
     }
     loginRequest(dataLogin)
+    event?.preventDefault();
     authService.loginRequest(dataLogin).then(response => {
-        console.log(response.data.token)
         authService.saveAccessToken(response.data.token)
         window.location.href = 'http://localhost:5173/dash';
     }).catch(error => {
-        console.log("Erro no login", error)
+        console.log("Erro no login", error.message)
         setError('Credenciais inválidas');
     })
   };

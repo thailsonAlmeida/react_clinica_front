@@ -12,22 +12,25 @@ import Schedulings from './routes/Schedulings/index.tsx'
 import Dashboard from './routes/Dashboad/index.tsx'
 import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom'
 import { history } from './utils/history.ts'
+import { PrivateRoute } from './components/PrivateRoute/index.tsx'
 
 createRoot(document.getElementById('root')!).render(  
     <HistoryRouter history={history}>
         <Routes>
             <Route path="/" element={<App />} >            
-                <Route  index element={<Auth />}/>
-                <Route path="dash" element={<Dashboard />}/>
-                <Route path="profissionais" element={<Professionals />} /> 
-                <Route path="profissionais/:profissionalId" element={<Professional />} />
+                <Route  index element={<PrivateRoute><Dashboard /></PrivateRoute>}/>
+                <Route path="dash" element={<PrivateRoute><Dashboard /></PrivateRoute>}/>
+                
+                <Route path="profissionais" element={<PrivateRoute><Professionals /></PrivateRoute>} /> 
+                <Route path="profissionais/:profissionalId" element={<PrivateRoute><Professional /></PrivateRoute>} />
 
-                <Route path="pacientes" element={<Patients />} />
-                <Route path="pacientes/:patientId" element={<Patient />} />
+                <Route path="pacientes" element={<PrivateRoute><Patients /></PrivateRoute>} />
+                <Route path="pacientes/:patientId" element={<PrivateRoute><Patient /></PrivateRoute>} />
 
-                <Route path="agendamentos" element={<Schedulings />} />
-                <Route path="agenda/:profissionalId" element={<Agenda />} /> 
-            </Route>
+                <Route path="agendamentos" element={<PrivateRoute><Schedulings /></PrivateRoute>} />  
+                <Route path="agenda/:profissionalId" element={<PrivateRoute><Agenda /></PrivateRoute>} />                 
+            </Route>     
+                 
             <Route path="*" element={<Navigate to="/login" />} /> 
             <Route path="/login" element={<Auth />} />
         </Routes>        
