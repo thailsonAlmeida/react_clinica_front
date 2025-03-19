@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { AxiosRequestConfig } from "axios";
-import { AccessTokenPayLoadDTO, CredentialsDTO } from "../models/auth";
+import { AccessTokenPayLoadDTO, CredentialsDTO, RoleEnum } from "../models/auth";
 import { requestBackend } from "../utils/requests";
 import * as accessTokenRepository from "../localstorage/access-token-repository"
 import jwtDecode from "jwt-decode";
@@ -45,4 +45,20 @@ export function getAccessTokenPayload(): AccessTokenPayLoadDTO | undefined {
 export function isAuthenticated(): boolean {
     const tokenPayload = getAccessTokenPayload();
     return tokenPayload && tokenPayload.exp * 1000 > Date.now() ? true : false;
+}
+
+export function hasAnyRoles(roles: RoleEnum[]): boolean {
+    if (roles.length === 0) {
+        return true;
+    }
+    const tokenPayload = getAccessTokenPayload();
+    if (tokenPayload !== undefined) {
+        for (let i = 0; i < roles.length; i++) {
+            if (tokenPayload.authorities.includes(roles[i])) {
+                return true;
+            }
+        }
+    //return roles.some(role => tokenData.authorities.includes(role));
+    }
+    return false;
 }
