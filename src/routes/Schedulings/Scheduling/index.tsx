@@ -6,11 +6,13 @@ import * as professionalService from "../../../services/professional-service";
 import * as schedulingService from "../../../services/scheduling-service";
 import * as reportService from "../../../services/report-service";
 import { ProfessionalDTO } from "../../../models/professional";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import * as formats from "../../../utils/formats";
 import { SchedulingDTO } from "../../../models/scheduling";
 import { PatientDTO } from "../../../models/patient";
+import * as useService from "../../../services/user-service"
+import { UserDTO } from "../../../models/user";
 
 
 type FormDataReport = {
@@ -18,7 +20,7 @@ type FormDataReport = {
     reportType: string,
     professional: ProfessionalDTO,
     patient: PatientDTO,
-    description: string
+    description: string,    
 }
 
 type FormDataSDcheduling = {
@@ -32,21 +34,32 @@ type FormDataSDcheduling = {
 
 
 export default function Scheduling(){
-    const params = useParams();
     const navigete = useNavigate();    
     const [scheduling, setScheduling] = useState<ProfessionalDTO>();
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
+    const [user, setUser] = useState<UserDTO>();
+
+    useEffect(() => {        
+        useService.findMe()
+            .then(response => {
+                setUser(response.data);
+            })
+            .catch(error => {
+                console.log("Erro ao buscar usuário:", error);
+            });
+    }, []);
 
     useEffect(() => {
-        professionalService.findById(Number(params.profissionalId))
-            .then( 
-                response => {
-                    setScheduling(response.data)
-                }
-            ).catch(() => {
-                navigete("/dash");
-           });
-    }, [])  
+        if (user && user.professional?.id) {
+            professionalService.findById(user.professional.id)
+                .then(response => {
+                    setScheduling(response.data);
+                })
+                .catch(() => {
+                    navigete("/dash");
+                });
+        }
+    }, [user]);
     
     const [formData, setFormData] = useState<FormDataReport>({
         dateReport: '',
@@ -57,7 +70,8 @@ export default function Scheduling(){
             name: '',
             specialty: '',
             contact: '',
-            schedulings: []
+            schedulings: [],
+            user: null
         },
         patient: {
             id: 0,
@@ -66,7 +80,7 @@ export default function Scheduling(){
             contact: '',
             birthDay: '',
             reportHistory: []  
-        },                
+        },             
     })
 
     function handleInputChange(event : any) {
@@ -107,7 +121,8 @@ export default function Scheduling(){
                     name: '',
                     specialty: '',
                     contact: '',
-                    schedulings: []
+                    schedulings: [],
+                    user: null
 
                 }, 
                 patient: { 
@@ -151,7 +166,8 @@ export default function Scheduling(){
                     name: '',
                     specialty: '',
                     contact: '',
-                    schedulings: []
+                    schedulings: [],
+                    user: null
 
                 }, 
                 patient: { 
@@ -225,7 +241,8 @@ export default function Scheduling(){
                 name: '',
                 specialty: '',
                 contact: '',
-                schedulings: []
+                schedulings: [],
+                user: null
             },
             patient: {
                 id: 0,
@@ -246,7 +263,12 @@ export default function Scheduling(){
         <div className="main">
             <NavBarHorizontalOne name="Agenda" />  
             <nav className="navbar-horizontal navbar-horizontal-secondary ">
-                    
+                {
+                    user &&
+                    <div>
+                        Especialidade: {user.professional?.specialty}
+                    </div>
+                }                    
             </nav> 
 
             <div className="p-3 ">
@@ -263,7 +285,9 @@ export default function Scheduling(){
                         </thead>
                         <tbody>
                             {
-                                scheduling?.schedulings.map(
+                                scheduling?.schedulings
+                                .filter(i => i.confirmed)
+                                .map(
                                     i => (
                                         <tr key={i.id}>
                                             <td>{formats.dataBR(i.dateHour.split("T")[0])}</td>

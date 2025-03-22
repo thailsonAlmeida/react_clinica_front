@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import NavBarHorizontalOne from "../../components/NavbarHorizantalOne";
@@ -18,7 +17,7 @@ export default function Dashboard(){
     const [user, setUser] = useState<UserDTO>();
     const [patients, setPatients] = useState<PatientDTO[]>([]);
     const [professionals, setProfessionals] = useState<ProfessionalDTO[]>([]); 
-    const [scheduling, setScheduling] = useState<ProfessionalDTO>();
+    const [, setScheduling] = useState<ProfessionalDTO>();
 
     const [schedulingsPendent, setSchedulingsPendent] = useState(Number);
     const [schedulingsConfirm, setSchedulingsConfirm] = useState(Number);
@@ -74,26 +73,44 @@ export default function Dashboard(){
                 });
         }        
            
-        if(user?.role === "PROFESSIONAL"){
-            professionalService.findById(Number(1))
-            .then( 
-                response => {
-                    setScheduling(response.data)
+        if (user?.role === "PROFESSIONAL") {           
+            professionalService.findById(Number(user.professional?.id))
+                .then(response => {
+                    setScheduling(response.data);
                     const schedulingData = response.data.schedulings;  
-                    setSchedulingsProfessionalPendent(schedulingData.filter((s: { confirmed: boolean; }) => s.confirmed === false).length)
-                    setSchedulingsProfessionalConfirm(schedulingData.filter((s: { confirmed: boolean; }) => s.confirmed === true).length)
-                    setSchedulingsProfessionalCancel(schedulingData.filter((s: { cancel: boolean; }) => s.cancel === true).length)
-                }
-            ).catch(() => {
-                navigete("/dash");
-            });
+                    
+                    setSchedulingsProfessionalPendent(
+                        schedulingData.filter((s: { confirmed: boolean; cancel: boolean }) => 
+                            s.confirmed === false && s.cancel !== true
+                        ).length
+                    );
+        
+                    setSchedulingsProfessionalConfirm(
+                        schedulingData.filter((s: { confirmed: boolean }) => s.confirmed === true).length
+                    );
+        
+                    setSchedulingsProfessionalCancel(
+                        schedulingData.filter((s: { cancel: boolean }) => s.cancel === true).length
+                    );
+                })
+                .catch(() => {
+                    navigete("/dash");
+                });
         }
 
     },[user]);
 
     return(
         <div className="main">
-            <NavBarHorizontalOne name="Dashboard" />                    
+            <NavBarHorizontalOne name="Dashboard" />   
+            <nav className="navbar-horizontal navbar-horizontal-secondary ">
+                {
+                    user?.professional?.specialty &&
+                    <div>
+                        Especialidade: {user.professional?.specialty}
+                    </div>
+                }                    
+            </nav>                  
             {
                 user?.role === "MANAGER" ?
                 <section>
@@ -112,7 +129,8 @@ export default function Dashboard(){
                                             <NavLink to={"/agendamentos"} className="card-link-theme">                                  
                                                 <b className="card-number-theme">
                                                     {
-                                                    schedulingsPendent                                         
+                                                    schedulingsPendent    
+                                                                                         
                                                     }
                                                 </b>
                                             </NavLink>

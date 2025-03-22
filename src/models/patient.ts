@@ -6,5 +6,5 @@ export type PatientDTO = {
     address: string,
     contact: string,
     birthDay: string,
-    reportHistory : ReportDTO[]  
+    reportHistory : ReportDTO[] | null
 }

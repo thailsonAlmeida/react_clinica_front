@@ -85,7 +85,7 @@ export default function NavBarVertical(){
                         </li>   
 
                         <li className="sidebar-item" data-toggle="tooltip" data-placement="right" title="Agenda">
-                            <NavLink to="/agenda/1" className={({isActive}) => isActive ? "sidebar-link sidebar-link-active" : "sidebar-link"}>
+                            <NavLink to="/agenda" className={({isActive}) => isActive ? "sidebar-link sidebar-link-active" : "sidebar-link"}>
                                 <i className="bi bi-calendar-check-fill"></i>
                                 <span>Agenda</span>
                             </NavLink>

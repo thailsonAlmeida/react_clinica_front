@@ -68,7 +68,14 @@ export default function Schedulings(){
                 name: '',
                 specialty: '',
                 contact: '',
-                schedulings: []
+                schedulings: [],
+                user: {
+                    id: 0,
+                    login:'',
+                    authorities:[],
+                    professional: null,
+                    role:''
+                }
             },
             patient: {
                 id: 0,
@@ -203,7 +210,14 @@ export default function Schedulings(){
                 name: '',
                 specialty: '',
                 contact: '',
-                schedulings: []
+                schedulings: [],
+                user: {
+                    id: 0,
+                    login:'',
+                    authorities:[],
+                    professional: null,
+                    role:''
+                }
             },
             patient: {
                 id: 0,

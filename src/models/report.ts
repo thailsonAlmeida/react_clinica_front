@@ -6,6 +6,6 @@ export type ReportDTO = {
     dateReport: string,
     reportType: string,
     description: string,
-    patient: PatientDTO,
-    professional: ProfessionalDTO    
+    patient: PatientDTO | null,
+    professional: ProfessionalDTO | null,    
 }
