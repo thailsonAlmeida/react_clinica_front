@@ -44,7 +44,7 @@ export default function Scheduling(){
                     setScheduling(response.data)
                 }
             ).catch(() => {
-                navigete("/profissionais");
+                navigete("/dash");
            });
     }, [])  
     

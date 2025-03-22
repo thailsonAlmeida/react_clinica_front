@@ -21,14 +21,14 @@ createRoot(document.getElementById('root')!).render(
                 <Route  index element={<PrivateRoute><Dashboard /></PrivateRoute>}/>
                 <Route path="dash" element={<PrivateRoute><Dashboard /></PrivateRoute>}/>
                 
-                <Route path="profissionais" element={<PrivateRoute><Professionals /></PrivateRoute>} /> 
-                <Route path="profissionais/:profissionalId" element={<PrivateRoute><Professional /></PrivateRoute>} />
+                <Route path="profissionais" element={<PrivateRoute roles={['ROLE_MANAGER']}><Professionals /></PrivateRoute>} /> 
+                <Route path="profissionais/:profissionalId" element={<PrivateRoute roles={['ROLE_MANAGER']}><Professional /></PrivateRoute>} />
 
-                <Route path="pacientes" element={<PrivateRoute><Patients /></PrivateRoute>} />
+                <Route path="pacientes" element={<PrivateRoute roles={['ROLE_MANAGER']}><Patients /></PrivateRoute>} />
                 <Route path="pacientes/:patientId" element={<PrivateRoute><Patient /></PrivateRoute>} />
 
-                <Route path="agendamentos" element={<PrivateRoute><Schedulings /></PrivateRoute>} />  
-                <Route path="agenda/:profissionalId" element={<PrivateRoute><Agenda /></PrivateRoute>} />                 
+                <Route path="agendamentos" element={<PrivateRoute roles={['ROLE_MANAGER']}><Schedulings /></PrivateRoute>} />  
+                <Route path="agenda/:profissionalId" element={<PrivateRoute roles={['ROLE_PROFESSIONAL']}><Agenda /></PrivateRoute>} />                 
             </Route>     
                  
             <Route path="*" element={<Navigate to="/login" />} /> 

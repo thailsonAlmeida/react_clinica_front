@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "../../assets/images/clinica_logo.svg";
 import { NavLink } from "react-router-dom";
 import * as localStorage from "../../localstorage/access-token-repository"
+import * as useService from "../../services/user-service"
+import { UserDTO } from "../../models/user";
 
 export default function NavBarVertical(){
     const [isExpanded, setIsExpanded] = useState(false);
+    const [user, setUser] = useState<UserDTO>();
 
     const toggleSidebar = () => {
       setIsExpanded(!isExpanded); // Alterna o valor entre true/false
@@ -13,6 +16,16 @@ export default function NavBarVertical(){
     const logouf = () => {
         localStorage.remove()
     };
+
+    useEffect(() => {
+            useService.findMe()
+                .then(response => {
+                    setUser(response.data)
+                })
+                .catch(error => {
+                    console.log(error, "error")
+                });
+        },[]);
 
     return(
         <>
@@ -28,42 +41,59 @@ export default function NavBarVertical(){
                     </div>
                 </div>
 
-                <ul className="sidebar-nav">
-                    <li className="sidebar-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                        <NavLink to="/dash" className={({isActive}) => isActive ? "sidebar-link sidebar-link-active" : "sidebar-link"}>
-                            <i className="bi bi-grid-1x2-fill"></i>
-                            <span>DashBoard</span>
-                        </NavLink>
-                    </li>
+                {
+                    user?.role === "MANAGER" ?
 
-                    <li className="sidebar-item" data-toggle="tooltip" data-placement="right" title="Pacientes">
-                        <NavLink to="/pacientes" className={({isActive}) => isActive ? "sidebar-link sidebar-link-active" : "sidebar-link"}>
-                            <i className="bi bi-people-fill"></i>
-                            <span>Pacientes</span>
-                        </NavLink>
-                    </li>
+                    <ul className="sidebar-nav">                    
+                        <li className="sidebar-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                            <NavLink to="/dash" className={({isActive}) => isActive ? "sidebar-link sidebar-link-active" : "sidebar-link"}>
+                                <i className="bi bi-grid-1x2-fill"></i>
+                                <span>DashBoard</span>
+                            </NavLink>
+                        </li>
 
-                    <li className="sidebar-item" data-toggle="tooltip" data-placement="right" title="Profissionais">
-                        <NavLink to="/profissionais" className={({isActive}) => isActive ? "sidebar-link sidebar-link-active" : "sidebar-link"}>
-                            <i className="bi bi-file-person"></i>
-                            <span>Profissionais</span>
-                        </NavLink>
-                    </li>
+                        <li className="sidebar-item" data-toggle="tooltip" data-placement="right" title="Pacientes">
+                            <NavLink to="/pacientes" className={({isActive}) => isActive ? "sidebar-link sidebar-link-active" : "sidebar-link"}>
+                                <i className="bi bi-people-fill"></i>
+                                <span>Pacientes</span>
+                            </NavLink>
+                        </li>
 
-                    <li className="sidebar-item" data-toggle="tooltip" data-placement="right" title="Agendamentos">
-                        <NavLink to="/agendamentos" className={({isActive}) => isActive ? "sidebar-link sidebar-link-active" : "sidebar-link"}>
-                            <i className="bi bi-calendar-date-fill"></i>
-                            <span>Agendamentos</span>
-                        </NavLink>
-                    </li>
+                        <li className="sidebar-item" data-toggle="tooltip" data-placement="right" title="Profissionais">
+                            <NavLink to="/profissionais" className={({isActive}) => isActive ? "sidebar-link sidebar-link-active" : "sidebar-link"}>
+                                <i className="bi bi-file-person"></i>
+                                <span>Profissionais</span>
+                            </NavLink>
+                        </li>
 
-                    <li className="sidebar-item" data-toggle="tooltip" data-placement="right" title="Agenda">
-                        <NavLink to="/agenda/1" className={({isActive}) => isActive ? "sidebar-link sidebar-link-active" : "sidebar-link"}>
-                            <i className="bi bi-calendar-check-fill"></i>
-                            <span>Agenda</span>
-                        </NavLink>
-                    </li>
-                </ul>
+                        <li className="sidebar-item" data-toggle="tooltip" data-placement="right" title="Agendamentos">
+                            <NavLink to="/agendamentos" className={({isActive}) => isActive ? "sidebar-link sidebar-link-active" : "sidebar-link"}>
+                                <i className="bi bi-calendar-date-fill"></i>
+                                <span>Agendamentos</span>
+                            </NavLink>
+                        </li>
+                    </ul>
+
+                    :
+
+                    <ul className="sidebar-nav">                    
+                        <li className="sidebar-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                            <NavLink to="/dash" className={({isActive}) => isActive ? "sidebar-link sidebar-link-active" : "sidebar-link"}>
+                                <i className="bi bi-grid-1x2-fill"></i>
+                                <span>DashBoard</span>
+                            </NavLink>
+                        </li>   
+
+                        <li className="sidebar-item" data-toggle="tooltip" data-placement="right" title="Agenda">
+                            <NavLink to="/agenda/1" className={({isActive}) => isActive ? "sidebar-link sidebar-link-active" : "sidebar-link"}>
+                                <i className="bi bi-calendar-check-fill"></i>
+                                <span>Agenda</span>
+                            </NavLink>
+                        </li>
+                    </ul>
+                }
+
+                
 
                 <div className="sidebar-footer" data-toggle="tooltip" data-placement="right" title="Logout">
                     <NavLink to="/login" className="sidebar-link" onClick={logouf}>
