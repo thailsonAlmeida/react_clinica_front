@@ -11,7 +11,7 @@ export function findAll(){
     return requestBackend(config);
 }
 
-export function findPageRequest(page: number, name: string, size = 12, sort = "dateHour,asc") {
+export function findPageRequest(page: number, name: string, size = 100, sort = "dateHour,asc", startDate?: string, endDate?: string) {
     const config : AxiosRequestConfig = {
         method: "GET",
         url: "/agendamentos",
@@ -20,7 +20,8 @@ export function findPageRequest(page: number, name: string, size = 12, sort = "d
             name: name,
             size: size,
             sort: sort,
-            
+            ...(startDate && { startDate }), 
+            ...(endDate && { endDate })
         },
         withCredentials: true
     }

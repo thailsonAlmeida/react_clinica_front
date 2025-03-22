@@ -31,6 +31,7 @@ export default function Schedulings(){
     const [patients, setPatients] = useState<PatientDTO[]>([]);
     const [selectedScheduling, setSelectedScheduling] = useState<SchedulingDTO | null>(null);// Store the entire scheduling object
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
+    const [dateRange, setDateRange] = useState({ startDate: "", endDate: "" });
 
     const [selectedPatient, setSelectedPatient] = useState<PatientDTO | null>(null);
     const [selectedProfessional, setSelectedProfessional] = useState<ProfessionalDTO | null>(null);
@@ -39,13 +40,13 @@ export default function Schedulings(){
         name: ""
     });
     const [isLastPage, setIsLastPage] = useState(false);
-
+    
     useEffect(() => {
-        schedulingService.findPageRequest(queryParams.page, queryParams.name)
+        schedulingService.findPageRequest(queryParams.page, queryParams.name, 100, "dateHour,asc", String(dateRange.startDate), String(dateRange.endDate) )
             .then(
                 (response) => {   
                     const nextPage = response.data.content;                 
-                    setSchedulings(schedulings.concat(nextPage));
+                    setSchedulings(nextPage);
                     setIsLastPage(response.data.last)
                 }
             )
@@ -59,7 +60,7 @@ export default function Schedulings(){
             })
 
         
-    }, [queryParams]);
+    }, [queryParams]);   
 
     const [formData, setFormData] = useState<FormData>({
             dateHour: '',
@@ -251,7 +252,35 @@ export default function Schedulings(){
                     > Agendar 
                     <span> <i className="bi bi-calendar2-check-fill"/></span>
                     </a>
-            </nav>             
+            </nav>
+
+            <div className="container navbar-horizontal navbar-horizontal-secondary mt-3">
+                <div className="row mb-3">
+                    <div className="col">
+                        <label>Data Inicial</label>
+                        <input
+                            type="date"
+                            className="form-control"
+                            value={dateRange.startDate}
+                            onChange={(e) => setDateRange({ ...dateRange, startDate: e.target.value })}
+                        />
+                    </div>
+                    <div className="col">
+                        <label>Data Final</label>
+                        <input
+                            type="date"
+                            className="form-control"
+                            value={dateRange.endDate}
+                            onChange={(e) => setDateRange({ ...dateRange, endDate: e.target.value })}
+                        />
+                    </div>
+                    <div className="col d-flex align-items-end">
+                        <button className="btn auth-btn-theme" onClick={() => setQueryParams({ ...queryParams, page: 0 })}>
+                            Filtrar
+                        </button>
+                    </div>
+                </div>                 
+            </div>   
 
             <div className="p-3 ">
                 <div className="container p-3">
@@ -260,13 +289,15 @@ export default function Schedulings(){
                         <table className="table table-hover table-responsive">
                             <thead>
                                 <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Paciente</th>
-                                <th scope="col">Professional</th>
                                 <th scope="col">Data</th>
                                 <th scope="col">Hora</th>
                                 <th scope="col">Confirmado</th>
                                 <th scope="col">Cancelado</th>
+
+                                <th scope="col">Paciente</th>
+                                <th scope="col">Professional</th>
+                                
+                                
                                 <th scope="col">Ações</th>
                                 </tr>
                             </thead>
@@ -275,13 +306,13 @@ export default function Schedulings(){
                                     schedulings.map(
                                         i => (
                                             <tr key={i.id}>
-                                            <td scope="row">{i.id}</td>
-                                            <td>{i.patient.name}</td>
-                                            <td>{i.professional.name}</td>
                                             <td>{formats.dataBR(i.dateHour.split("T")[0])}</td>
                                             <td>{formats.hourBr(i.dateHour.split("T")[1])}</td>
                                             <td>{i.confirmed === true ? "Sim" : "Não"}</td>
                                             <td>{i.cancel === true ? "Sim" : "Não"}</td>
+                                            <td>{i.patient.name}</td>
+                                            <td>{i.professional.name}</td>                                           
+                                            
                                             <td>
                                                 <a 
                                                     href={"agendamentos/get/" + String(i.id)} 
