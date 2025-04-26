@@ -153,7 +153,8 @@ export default function Professionals(){
                         
                         <SearchBar onSearch={handleSearch} />
                         
-                        <table className="table table-hover table-responsive">
+                        <div className="table-responsive">
+                        <table className="table table-hover">
                             <thead>
                                 <tr>
                                 <th scope="col">ID</th>
@@ -218,6 +219,7 @@ export default function Professionals(){
                                                           
                             </tbody>
                         </table>
+                    </div>
 
                         {
                             !isLastPage &&

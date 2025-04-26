@@ -158,7 +158,8 @@ export default function Patients(){
                 
                     <SearchBar onSearch={handleSearch} />
 
-                    <table className="table table-hover table-responsive">
+                    <div className="table-responsive">
+                    <table className="table table-hover">
                         <thead>
                             <tr>
                             <th scope="col">ID</th>
@@ -214,6 +215,7 @@ export default function Patients(){
                             }    
                         </tbody>
                     </table>
+                    </div>
                     
                     {
                         !isLastPage &&

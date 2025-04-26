@@ -285,8 +285,8 @@ export default function Schedulings(){
             <div className="p-3 ">
                 <div className="container p-3">
 
-
-                        <table className="table table-hover table-responsive">
+                    <div className="table-responsive">
+                        <table className="table table-hover ">
                             <thead>
                                 <tr>
                                 <th scope="col">Data</th>
@@ -353,6 +353,7 @@ export default function Schedulings(){
 
                             </tbody>
                         </table>
+                    </div>
 
                         {
                             !isLastPage &&
