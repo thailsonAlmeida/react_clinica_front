@@ -79,6 +79,7 @@ export default function Scheduling(){
             address: '',
             contact: '',
             birthDay: '',
+            email:'',
             reportHistory: []  
         },             
     })
@@ -131,6 +132,7 @@ export default function Scheduling(){
                     address: '',
                     contact: '',
                     birthDay: '',
+                    email:'',
                     reportHistory: []
                 },
                 present: true,
@@ -176,6 +178,7 @@ export default function Scheduling(){
                     address: '',
                     contact: '',
                     birthDay: '',
+                    email:'',
                     reportHistory: []
                 },
                 present: false,
@@ -250,6 +253,7 @@ export default function Scheduling(){
                 address: '',
                 contact: '',
                 birthDay: '',
+                email:'',
                 reportHistory: []  
             },  
         })

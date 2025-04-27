@@ -32,18 +32,24 @@ export default function PatientDetails({patient} : Props) {
                     </p>
 
                     <p>
-                        <span><b>Endereço</b></span><br />
-                        <span>{patient.address}</span>
-                    </p>
+                        <span><b>Nascimento</b></span><br />
+                        <span>{formats.dataBR(patient.birthDay)}</span>
+                    </p>                    
 
                     <p>
                         <span><b>Contato</b></span><br />
                         <span>{formats.numberBr(patient.contact)}</span>
                     </p>
+                    
 
                     <p>
-                        <span><b>Nascimento</b></span><br />
-                        <span>{formats.dataBR(patient.birthDay)}</span>
+                        <span><b>Email</b></span><br />
+                        <span>{formats.dataBR(patient.email)}</span>
+                    </p>
+
+                    <p>
+                        <span><b>Endereço</b></span><br />
+                        <span>{patient.address}</span>
                     </p>
 
                 </div>   
@@ -64,7 +70,7 @@ export default function PatientDetails({patient} : Props) {
                         
             
                     {
-                        patient?.reportHistory.map(
+                        (patient?.reportHistory ?? []).map(
                             i => (
                                 <tr key={i.id}>
                                     <td>{formats.dataBR(i.dateReport.split("T")[0])}</td>
@@ -76,7 +82,13 @@ export default function PatientDetails({patient} : Props) {
                                             className="link-dark me-2"  
                                             data-bs-toggle="modal" 
                                             data-bs-target="#modalReport"
-                                            onClick={() => handleShowReport(i, i.professional)}
+                                            onClick={() => {
+                                                if (i.professional) {
+                                                    handleShowReport(i, i.professional);
+                                                } else {
+                                                    console.warn("Profissional não encontrado para este relatório.");
+                                                }
+                                            }}
                                         >
                                         <i className="bi bi-file-earmark-text-fill" /></a>
                                     </td>                                    

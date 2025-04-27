@@ -84,6 +84,7 @@ export default function Schedulings(){
                 address: '',
                 contact: '',
                 birthDay: '',
+                email:'',
                 reportHistory: []  
             },
             present: false,
@@ -226,6 +227,7 @@ export default function Schedulings(){
                 address: '',
                 contact: '',
                 birthDay: '',
+                email:'',
                 reportHistory: []  
             },
             present: false,
@@ -388,11 +390,16 @@ export default function Schedulings(){
                                         </div>
                                         <div className="col">
                                             <b>Contato:</b> {selectedPatient?.contact}
-                                        </div>
+                                        </div>                                                                           
+                                    </div>      
+                                    <div className="row">                                        
                                         <div className="col">
                                             <b>Endereço:</b> {selectedPatient?.address}
-                                        </div>                                        
-                                    </div>                    
+                                        </div>     
+                                        <div className="col">
+                                            <b>Email:</b> {selectedPatient?.email}
+                                        </div>                                    
+                                    </div>               
                             </>
                         ) : (
                             <p>Selecione um agendamento para visualizar.</p>
@@ -416,7 +423,9 @@ export default function Schedulings(){
                                         </div>
                                         <div className="col">
                                             <b>Contato:</b> {selectedProfessional?.contact}
-                                        </div>
+                                        </div>                                      
+                                    </div>
+                                    <div className="row">                                        
                                         <div className="col">
                                             <b>Especialidade:</b> {selectedProfessional?.specialty}
                                         </div>                                        

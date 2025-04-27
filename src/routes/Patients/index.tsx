@@ -12,6 +12,7 @@ type FormData = {
     name: string,
     address: string,
     contact: string,
+    email:string,
     birthDay: string,
 }
 
@@ -47,6 +48,7 @@ export default function Patients(){
         name: '',
         address: '',
         contact: '',
+        email:'',
         birthDay: '',
     });
 
@@ -57,6 +59,7 @@ export default function Patients(){
         if (!formData.address) newErrors.address = "O endereço é obrigatório!";
         if (!formData.contact) newErrors.contact = "O número de contato é obrigatório!";
         if (!formData.birthDay) newErrors.birthDay = "A data de nascimento é obrigatório!";
+        if (!formData.email) newErrors.email = "O email é obrigatório!";
     
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0; // Retorna true se não houver erros
@@ -129,6 +132,7 @@ export default function Patients(){
             name: '',
             address: '',
             birthDay: '',
+            email:'',
             contact: '',
         })
         setErrors({
@@ -164,7 +168,8 @@ export default function Patients(){
                             <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Nome</th>
-                            <th scope="col">Contato</th>                        
+                            <th scope="col">Contato</th>   
+                            <th scope="col">Email</th>                                                    
                             <th scope="col">Ações</th>
                             </tr>
                         </thead>
@@ -175,6 +180,7 @@ export default function Patients(){
                                         <td>{i.id}</td>
                                         <td>{i.name}</td>
                                         <td>{formats.numberBr(i.contact)}</td>                                      
+                                        <td>{i.email}</td>
                                         <td>
                                             <a 
                                                 href={"pacientes/" + i.id}
@@ -194,6 +200,7 @@ export default function Patients(){
                                                     name: i.name,
                                                     address: i.address,
                                                     contact: i.contact,
+                                                    email: i.email,
                                                     birthDay: formats.dateYYYYmmDD(i.birthDay.split('T')[0]),                                                                                                        
                                                 })}}
                                             >
@@ -300,7 +307,21 @@ export default function Patients(){
                                     placeholder="Data de Nacimento"
                                     required
                                 />
-                                {errors.birthDay && <div className="invalid-feedback">{errors.birthDay}</div>} {/* Exibe a mensagem de erro */}                                
+                                {errors.birthDay && <div className="invalid-feedback">{errors.email}</div>} {/* Exibe a mensagem de erro */}                                
+                            </div>
+
+                            <div className="mb-3">
+                                <input 
+                                    type="email" 
+                                    className={`form-control ${errors.email ? 'is-invalid' : ''}`} 
+                                    id="email" 
+                                    name="email" 
+                                    value={formData.email}
+                                    onChange={handleInputChange}
+                                    placeholder="Email"
+                                    required
+                                />
+                                {errors.email && <div className="invalid-feedback">{errors.email}</div>} {/* Exibe a mensagem de erro */}                                
                             </div>
                         </form>
                     
@@ -389,6 +410,20 @@ export default function Patients(){
                                     onChange={handleInputChange}
                                 />
                                 {errors.birthDay && <div className="invalid-feedback">{errors.birthDay}</div>} {/* Exibe a mensagem de erro */}
+                            </div>
+
+                            <div className="mb-3">
+                                <input 
+                                    type="email" 
+                                    className={`form-control ${errors.email ? 'is-invalid' : ''}`} 
+                                    id="email" 
+                                    name="email" 
+                                    value={formData.email}
+                                    onChange={handleInputChange}
+                                    placeholder="Email"
+                                    required
+                                />
+                                {errors.email && <div className="invalid-feedback">{errors.email}</div>} {/* Exibe a mensagem de erro */}                                
                             </div>
                         </form>
                     
