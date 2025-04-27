@@ -45,6 +45,10 @@ body {
     color: var(--color-font-secondary);
 }
 
+body, html{
+    transition: opacity 0.9s ease-in-out;
+}
+
 .wrapper {
     display: flex;
 }

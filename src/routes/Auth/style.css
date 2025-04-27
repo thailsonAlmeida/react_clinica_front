@@ -48,7 +48,11 @@
 
 .auth-logo{
     display: block;
-    margin: 0 auto;
+    margin: 0 auto;    
+}
+
+.img-fluid{
+    height: 105px;
 }
 
 .auth-check-theme:checked{
