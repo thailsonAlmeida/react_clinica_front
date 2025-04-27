@@ -11,7 +11,8 @@ import ButtonNextPage from "../../components/ButtonNextPage";
 type FormData = {
     name: string,
     specialty: string,
-    contact: string
+    contact: string,
+    email: string
 }
 
 type QueryParams = {
@@ -46,6 +47,7 @@ export default function Professionals(){
             name: '',
             specialty: '',
             contact: '',
+            email:''
         });
 
     function validateForm() {
@@ -54,6 +56,7 @@ export default function Professionals(){
         if (!formData.name) newErrors.name = "O nome é obrigatório!";
         if (!formData.specialty) newErrors.specialty = "A especialidade é obrigatório!";
         if (!formData.contact) newErrors.contact = "A o número de contato é obrigatório!";
+        if (!formData.email) newErrors.email = "O email é obrigatório!";
     
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0; // Retorna true se não houver erros
@@ -125,6 +128,7 @@ export default function Professionals(){
             name: '',
             specialty: '',
             contact: '',
+            email:'',
         })
         setErrors({
             
@@ -160,6 +164,7 @@ export default function Professionals(){
                                 <th scope="col">ID</th>
                                 <th scope="col">Nome</th>
                                 <th scope="col">Especialidade</th>
+                                <th scope="col">Email</th>
                                 <th scope="col">Contato</th>
                                 <th scope="col">Ações</th>
                                 </tr>
@@ -173,6 +178,7 @@ export default function Professionals(){
                                                 <td scope="row">{i.id}</td>
                                                 <td>{i.name}</td>
                                                 <td>{i.specialty}</td>
+                                                <td>{i.email}</td>
                                                 <td>{formats.numberBr(i.contact)}</td>
                                                 <td>
                                                     <a 
@@ -194,7 +200,8 @@ export default function Professionals(){
                                                                 setFormData({
                                                                     name: i.name,
                                                                     contact: i.contact,
-                                                                    specialty: i.specialty
+                                                                    specialty: i.specialty,
+                                                                    email: i.email,
                                                                 })
                                                             }
                                                         }
@@ -279,6 +286,20 @@ export default function Professionals(){
 
                                 <div className="mb-3">
                                     <input 
+                                        type="email" 
+                                        className={`form-control ${errors.email ? 'is-invalid' : ''}`} 
+                                        id="email" 
+                                        name="email"
+                                        placeholder="Email"
+                                        onChange={handleInputChange}
+                                        value={formData.email}
+                                        required
+                                    />
+                                    {errors.email && <div className="invalid-feedback">{errors.email}</div>} {/* Exibe a mensagem de erro */}
+                                </div>
+
+                                <div className="mb-3">
+                                    <input 
                                         type="text" 
                                         className={`form-control ${errors.contact ? 'is-invalid' : ''}`} 
                                         id="contact" 
@@ -352,6 +373,20 @@ export default function Professionals(){
                                         required
                                     />
                                     {errors.specialty && <div className="invalid-feedback">{errors.specialty}</div>} {/* Exibe a mensagem de erro */}
+                                </div>
+
+                                <div className="mb-3">
+                                    <input 
+                                        type="email" 
+                                        className={`form-control ${errors.email ? 'is-invalid' : ''}`} 
+                                        id="email" 
+                                        name="email"
+                                        placeholder="Email"
+                                        onChange={handleInputChange}
+                                        value={formData.email}
+                                        required
+                                    />
+                                    {errors.email && <div className="invalid-feedback">{errors.email}</div>} {/* Exibe a mensagem de erro */}
                                 </div>
 
                                 <div className="mb-3">
