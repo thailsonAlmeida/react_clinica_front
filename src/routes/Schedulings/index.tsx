@@ -241,6 +241,23 @@ export default function Schedulings(){
         })
     }
 
+    const whatsappButtonConfirmScheduling = (scheduling : SchedulingDTO) => {
+        const dateSchedulingPatient = formats.dataBR(scheduling.dateHour.split("T")[0]);
+        const hourSchedulingPatient = formats.hourBr(scheduling.dateHour.split("T")[1]);
+        const phoneSchedulingPatient = formats.formatPhoneNumber55(scheduling.patient.contact);
+        console.log(`${dateSchedulingPatient} às ${hourSchedulingPatient} to ${phoneSchedulingPatient}`)
+        
+        console.log(scheduling.patient.contact)
+       
+        const phoneNumber = phoneSchedulingPatient; // Coloque o número com DDI e DDD (ex: 55 + código de área + número)
+        const message = `Olá, somos da clínica saúde, podemos confirmar seu agendamento para o dia ${dateSchedulingPatient} às ${hourSchedulingPatient}?`;
+      
+        
+        const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+        window.open(url, '_blank'); 
+        
+    };
+
     return(    
     <>
         <div className="main">
@@ -340,7 +357,7 @@ export default function Schedulings(){
                                                 </a>
                                                 
                                                 <a 
-                                                    href="#" 
+                                                    href="" 
                                                     className="link-dark me-2"
                                                     data-bs-toggle="modal" 
                                                     data-bs-target="#modalSchedulingDelete"
@@ -348,7 +365,13 @@ export default function Schedulings(){
                                                     >
                                                         <i className="bi bi-trash-fill" />
                                                 </a>
-                                                <a href="#" className="link-dark me-2"><i className="bi bi-whatsapp"></i></a>
+                                                <a 
+                                                    href="" 
+                                                    className="link-dark me-2"
+                                                    onClick={() => whatsappButtonConfirmScheduling(i)}
+                                                    >
+                                                        <i className="bi bi-whatsapp" />
+                                                </a>
                                             </td>
                                             </tr>
                                         )

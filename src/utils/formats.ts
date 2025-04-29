@@ -21,3 +21,11 @@ export const numberBr = (number : string) => {
 export const dateYYYYmmDD = (number : string) => {
     return number.replace(/(\d{2})\/(\d{2})\/(\d{4})/, "$3-$2-$1")
 }
+
+export const formatPhoneNumber55 = (rawNumber : string) => {
+    // Remove tudo que não for número
+    const cleaned = rawNumber.replace(/\D/g, '');
+    
+    // Adiciona o DDI do Brasil (55) se ainda não tiver
+    return cleaned.startsWith('55') ? cleaned : '55' + cleaned;
+  }
