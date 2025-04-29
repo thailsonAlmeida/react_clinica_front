@@ -8,3 +8,8 @@ export type UserDTO = {
     professional: ProfessionalDTO | null,
     authorities: RoleEnum[],
 }
+
+export type UserChangePasswordDTO = {
+    oldPassword: string,
+    newPassword: string
+}

@@ -260,7 +260,6 @@ export default function Professionals(){
                                     <input 
                                         type="text" 
                                         className={`form-control ${errors.name ? 'is-invalid' : ''}`} 
-                                        id="name" 
                                         name="name"
                                         placeholder="Nome completo"
                                         onChange={handleInputChange}
@@ -274,7 +273,6 @@ export default function Professionals(){
                                     <input 
                                         type="text" 
                                         className={`form-control ${errors.specialty ? 'is-invalid' : ''}`} 
-                                        id="specialty" 
                                         name="specialty"
                                         placeholder="Especialidade"
                                         onChange={handleInputChange}
@@ -288,7 +286,6 @@ export default function Professionals(){
                                     <input 
                                         type="email" 
                                         className={`form-control ${errors.email ? 'is-invalid' : ''}`} 
-                                        id="email" 
                                         name="email"
                                         placeholder="Email"
                                         onChange={handleInputChange}
@@ -302,7 +299,6 @@ export default function Professionals(){
                                     <input 
                                         type="text" 
                                         className={`form-control ${errors.contact ? 'is-invalid' : ''}`} 
-                                        id="contact" 
                                         name="contact"
                                         placeholder="Telefone"
                                         onChange={handleInputChange}
@@ -329,7 +325,6 @@ export default function Professionals(){
                 </div>
             </div>
 
-
             <div className="modal fade" id="modalProfessionalPut" tabIndex={-1} aria-labelledby="modalProfessionalPutLabel" aria-hidden="true">
                 <div className="modal-dialog modal-xl">
                     
@@ -351,7 +346,6 @@ export default function Professionals(){
                                     <input 
                                         type="text" 
                                         className={`form-control ${errors.name ? 'is-invalid' : ''}`}
-                                        id="name" 
                                         name="name"
                                         placeholder="Nome completo"
                                         value={formData.name}
@@ -365,7 +359,6 @@ export default function Professionals(){
                                     <input 
                                         type="text" 
                                         className={`form-control ${errors.specialty ? 'is-invalid' : ''}`}
-                                        id="specialty" 
                                         name="specialty"
                                         placeholder="Especialidade"
                                         value={formData.specialty}
@@ -379,7 +372,6 @@ export default function Professionals(){
                                     <input 
                                         type="email" 
                                         className={`form-control ${errors.email ? 'is-invalid' : ''}`} 
-                                        id="email" 
                                         name="email"
                                         placeholder="Email"
                                         onChange={handleInputChange}
@@ -393,7 +385,6 @@ export default function Professionals(){
                                     <input 
                                         type="text" 
                                         className={`form-control ${errors.contact ? 'is-invalid' : ''}`}
-                                        id="contact" 
                                         name="contact"
                                         placeholder="Telefone"
                                         value={formats.numberBr(formData.contact)}

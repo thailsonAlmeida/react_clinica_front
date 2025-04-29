@@ -28,7 +28,7 @@ export default function SearchBarScheduling({ onSearch }: Props){
         <form onSubmit={handleSubmit}>
         <div className="input-group mb-3">
             
-                <button className="btn btn-outline-secondary" type="submit" id="button-addon2"><i className="bi bi-search" /></button>
+                <button className="btn btn-outline-secondary" type="submit" ><i className="bi bi-search" /></button>
                 <input 
                     value={text}
                     type="date" 
@@ -40,7 +40,6 @@ export default function SearchBarScheduling({ onSearch }: Props){
                 />
                 <button 
                     className="btn btn-outline-secondary" 
-                    id="button-addon2"
                     onClick={handleResetClick}
                 >
                     <i className="bi bi-x" />

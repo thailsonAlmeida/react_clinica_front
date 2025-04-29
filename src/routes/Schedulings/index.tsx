@@ -470,7 +470,6 @@ export default function Schedulings(){
                                 <input 
                                     type="datetime-local" 
                                     className={`form-select ${errors.dateHour ? 'is-invalid' : ''}`}  
-                                    id="dateHour" 
                                     name="dateHour" 
                                     value={formData.dateHour}
                                     onChange={handleInputChange}
@@ -482,7 +481,6 @@ export default function Schedulings(){
                             <div className="mb-3 col">
                                     <label htmlFor="patient">Selecione o paciente</label>
                                     <select 
-                                        id="patient" 
                                         name="patient" 
                                         className={`form-select ${errors.patient ? 'is-invalid' : ''}`}  
                                         onChange={handleInputChange}                                        
@@ -504,7 +502,6 @@ export default function Schedulings(){
                                 <div className="mb-3 col">
                                     <label htmlFor="professional">Selecione o profissional</label>
                                     <select 
-                                        id="professional" 
                                         name="professional" 
                                         className={`form-select ${errors.professional ? 'is-invalid' : ''}`} 
                                         onChange={handleInputChange}                                        
@@ -559,7 +556,6 @@ export default function Schedulings(){
                                     <input 
                                         type="datetime-local" 
                                         className={`form-select ${errors.dateHour ? 'is-invalid' : ''}`}
-                                        id="dateHour" 
                                         name="dateHour" 
                                         value={formData.dateHour}
                                         onChange={handleInputChange}
@@ -601,7 +597,6 @@ export default function Schedulings(){
                                 <div className="mb-3 col">
                                     <label htmlFor="professional">Selecione o profissional</label>
                                     <select 
-                                        id="professional" 
                                         name="professional" 
                                         className="form-select" 
                                         onChange={handleInputChange} 

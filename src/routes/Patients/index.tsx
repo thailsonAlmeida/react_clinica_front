@@ -109,12 +109,10 @@ export default function Patients(){
 
         patientsService.post(formData)
             .then(() => {
-                console.log(formData)
                 window.location.reload(); 
             })
-            .catch(error => {
+            .catch(() => {
                 alert("Erro ao cadastrar o paciente. Verifique os dados e tente novamente.");
-                console.error(error);
             });
     }
 
@@ -257,7 +255,6 @@ export default function Patients(){
                                 <input 
                                     type="text" 
                                     className={`form-control ${errors.name ? 'is-invalid' : ''}`}
-                                    id="name" 
                                     name="name" 
                                     value={formData.name}
                                     onChange={handleInputChange}
@@ -271,7 +268,6 @@ export default function Patients(){
                                 <input 
                                     type="text" 
                                     className={`form-control ${errors.address ? 'is-invalid' : ''}`}
-                                    id="address" 
                                     name="address" 
                                     value={formData.address}
                                     onChange={handleInputChange}
@@ -285,7 +281,6 @@ export default function Patients(){
                                 <input 
                                     type="text" 
                                     className={`form-control ${errors.contact ? 'is-invalid' : ''}`}
-                                    id="contact" 
                                     name="contact" 
                                     value={formats.numberBr(formData.contact)}
                                     onChange={handleInputChange}
@@ -300,21 +295,19 @@ export default function Patients(){
                                 <input 
                                     type="date" 
                                     className={`form-control ${errors.birthDay ? 'is-invalid' : ''}`} 
-                                    id="birthDay" 
                                     name="birthDay" 
                                     value={formData.birthDay}
                                     onChange={handleInputChange}
                                     placeholder="Data de Nacimento"
                                     required
                                 />
-                                {errors.birthDay && <div className="invalid-feedback">{errors.email}</div>} {/* Exibe a mensagem de erro */}                                
+                                {errors.birthDay && <div className="invalid-feedback">{errors.birthDay}</div>} {/* Exibe a mensagem de erro */}                                
                             </div>
 
                             <div className="mb-3">
                                 <input 
                                     type="email" 
                                     className={`form-control ${errors.email ? 'is-invalid' : ''}`} 
-                                    id="email" 
                                     name="email" 
                                     value={formData.email}
                                     onChange={handleInputChange}
@@ -336,7 +329,6 @@ export default function Patients(){
                 </div>
             </div>
         </div>
-
 
         <div className="modal fade" id="modalPatientPut" tabIndex={-1} aria-labelledby="modalPatientPutLabel" aria-hidden="true">
             <div className="modal-dialog modal-xl">
@@ -361,7 +353,6 @@ export default function Patients(){
                                     name="name"
                                     value={formData.name}
                                     className={`form-control ${errors.name ? 'is-invalid' : ''}`}
-                                    id="name" 
                                     placeholder="Nome completo"
                                     required
                                     onChange={handleInputChange}
@@ -375,7 +366,6 @@ export default function Patients(){
                                     name="address"
                                     value={formData.address}
                                     className={`form-control ${errors.address ? 'is-invalid' : ''}`}
-                                    id="address" 
                                     placeholder="Endereço"
                                     required
                                     onChange={handleInputChange}
@@ -389,7 +379,6 @@ export default function Patients(){
                                     name="contact" 
                                     value={formData.contact}
                                     className={`form-control ${errors.contact ? 'is-invalid' : ''}`} 
-                                    id="contact" 
                                     placeholder="Telefone"
                                     required
                                     onChange={handleInputChange}
@@ -404,7 +393,6 @@ export default function Patients(){
                                     name="birthDay"
                                     value={formData.birthDay}
                                     className={`form-control ${errors.birthDay ? 'is-invalid' : ''}`}
-                                    id="birthDay" 
                                     placeholder="Data de Nacimento"
                                     required
                                     onChange={handleInputChange}
@@ -416,7 +404,6 @@ export default function Patients(){
                                 <input 
                                     type="email" 
                                     className={`form-control ${errors.email ? 'is-invalid' : ''}`} 
-                                    id="email" 
                                     name="email" 
                                     value={formData.email}
                                     onChange={handleInputChange}
