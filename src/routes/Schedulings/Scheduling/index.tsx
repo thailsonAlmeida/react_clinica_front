@@ -33,11 +33,13 @@ type FormDataSDcheduling = {
 }
 
 
-export default function Scheduling(){
+export default function Scheduling(){    
     const navigete = useNavigate();    
     const [scheduling, setScheduling] = useState<ProfessionalDTO>();
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [user, setUser] = useState<UserDTO>();
+    const [dateRange, setDateRange] = useState({ startDate: "", endDate: "" });
+    const [filteredSchedulings, setFilteredSchedulings] = useState<SchedulingDTO[]>([]);
 
     useEffect(() => {        
         useService.findMe()
@@ -54,6 +56,7 @@ export default function Scheduling(){
             professionalService.findById(user.professional.id)
                 .then(response => {
                     setScheduling(response.data);
+                    filterSchedulingsByDate(response.data, "", "");
                 })
                 .catch(() => {
                     navigete("/dash");
@@ -115,6 +118,7 @@ export default function Scheduling(){
             );
         
             setScheduling({ ...scheduling, schedulings: updatedSchedulings });
+            filterSchedulingsByDate({ ...scheduling, schedulings: updatedSchedulings }, dateRange.startDate, dateRange.endDate);
 
             const updatedData: FormDataSDcheduling = {
                 dateHour: thisScheduling.dateHour,
@@ -162,6 +166,7 @@ export default function Scheduling(){
             );
         
             setScheduling({ ...scheduling, schedulings: updatedSchedulings });
+            filterSchedulingsByDate({ ...scheduling, schedulings: updatedSchedulings }, dateRange.startDate, dateRange.endDate);
 
             const updatedData: FormDataSDcheduling = {
                 dateHour: thisScheduling.dateHour,
@@ -265,7 +270,25 @@ export default function Scheduling(){
             
         })
     }
-   
+
+    function filterSchedulingsByDate(professional: ProfessionalDTO, startDate: string, endDate: string) {
+        if (!professional) return;
+    
+        const now = new Date();
+    
+        const defaultStart = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0);
+        const defaultEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+    
+        const start = startDate ? new Date(startDate) : defaultStart;
+        const end = endDate ? new Date(endDate) : defaultEnd;
+    
+        const filtered = professional.schedulings.filter(scheduling => {
+            const schedulingDate = new Date(scheduling.dateHour);
+            return schedulingDate >= start && schedulingDate <= end;
+        });
+    
+        setFilteredSchedulings(filtered);
+    }
     return(
     <>
         <div className="main">
@@ -278,6 +301,38 @@ export default function Scheduling(){
                     </div>
                 }                    
             </nav> 
+
+            <div className="container navbar-horizontal navbar-horizontal-secondary mt-3">
+                <div className="row mb-3">
+                    <div className="col">
+                        <label>Data Inicial</label>
+                        <input
+                            type="date"
+                            className="form-control"
+                            value={dateRange.startDate}
+                            onChange={(e) => setDateRange({ ...dateRange, startDate: e.target.value })}
+                        />
+                    </div>
+                    <div className="col">
+                        <label>Data Final</label>
+                        <input
+                            type="date"
+                            className="form-control"
+                            value={dateRange.endDate}
+                            onChange={(e) => setDateRange({ ...dateRange, endDate: e.target.value })}
+                        />
+                    </div>
+                    <div className="col d-flex align-items-end">
+                        <button className="btn auth-btn-theme" onClick={()=> {
+                            if (scheduling) {
+                                filterSchedulingsByDate(scheduling, dateRange.startDate, dateRange.endDate);
+                            }
+                        }}>
+                            Filtrar
+                        </button>
+                    </div>
+                </div>                 
+            </div>  
 
             <div className="p-3 ">
                 <div className="container p-3">
@@ -294,7 +349,7 @@ export default function Scheduling(){
                         </thead>
                         <tbody>
                             {
-                                scheduling?.schedulings
+                                filteredSchedulings
                                 .filter(i => i.confirmed)
                                 .map(
                                     i => (
@@ -316,7 +371,9 @@ export default function Scheduling(){
                                                     href={"agendamento/" + i.id} 
                                                     onClick={(e) => {
                                                         e.preventDefault();
-                                                        handleConfirmPresence(i.id, i, scheduling.id);
+                                                        if (scheduling) {
+                                                            handleConfirmPresence(i.id, i, scheduling.id);
+                                                        }
                                                     }}
                                                     title="Confirmar presenção do paciente"
                                                     className="link-dark me-2">
@@ -331,7 +388,7 @@ export default function Scheduling(){
                                                     title="Adicionar relatório ao paciente"
                                                     data-bs-toggle="modal" 
                                                     data-bs-target="#modalReportPost"
-                                                    onClick={() => handlePostReportModal(i, scheduling)}
+                                                    onClick={() => scheduling && handlePostReportModal(i, scheduling)}
                                                     className="link-dark me-2">
                                                         {
                                                             i.present === true ? <i className="bi bi-file-earmark-plus" /> : ""
