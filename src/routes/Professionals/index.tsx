@@ -12,7 +12,8 @@ type FormData = {
     name: string,
     specialty: string,
     contact: string,
-    email: string
+    email: string,
+    registry: string,
 }
 
 type QueryParams = {
@@ -47,7 +48,8 @@ export default function Professionals(){
             name: '',
             specialty: '',
             contact: '',
-            email:''
+            email:'',
+            registry: '',
         });
 
     function validateForm() {
@@ -57,6 +59,7 @@ export default function Professionals(){
         if (!formData.specialty) newErrors.specialty = "A especialidade é obrigatório!";
         if (!formData.contact) newErrors.contact = "A o número de contato é obrigatório!";
         if (!formData.email) newErrors.email = "O email é obrigatório!";
+        if (!formData.registry) newErrors.registry = "O registro é obrigatório!";
     
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0; // Retorna true se não houver erros
@@ -129,6 +132,7 @@ export default function Professionals(){
             specialty: '',
             contact: '',
             email:'',
+            registry:'',
         })
         setErrors({
             
@@ -164,6 +168,7 @@ export default function Professionals(){
                                 <th scope="col">ID</th>
                                 <th scope="col">Nome</th>
                                 <th scope="col">Especialidade</th>
+                                <th scope="col">Registro</th>                                
                                 <th scope="col">Email</th>
                                 <th scope="col">Contato</th>
                                 <th scope="col">Ações</th>
@@ -175,9 +180,10 @@ export default function Professionals(){
                                     professionals.map(
                                         i => (
                                             <tr key={i.id}>
-                                                <td scope="row">{i.id}</td>
+                                                <td scope="row">{i.id}</td>                                                
                                                 <td>{i.name}</td>
                                                 <td>{i.specialty}</td>
+                                                <td>{i.registry}</td>                                                
                                                 <td>{i.email}</td>
                                                 <td>{formats.numberBr(i.contact)}</td>
                                                 <td>
@@ -202,6 +208,7 @@ export default function Professionals(){
                                                                     contact: i.contact,
                                                                     specialty: i.specialty,
                                                                     email: i.email,
+                                                                    registry: i.registry
                                                                 })
                                                             }
                                                         }
@@ -267,6 +274,19 @@ export default function Professionals(){
                                         required
                                     />
                                     {errors.name && <div className="invalid-feedback">{errors.name}</div>} {/* Exibe a mensagem de erro */}
+                                </div>
+
+                                <div className="mb-3">
+                                    <input 
+                                        type="text" 
+                                        className={`form-control ${errors.registry ? 'is-invalid' : ''}`} 
+                                        name="registry"
+                                        placeholder="Registro"
+                                        onChange={handleInputChange}
+                                        value={formData.registry}
+                                        required
+                                    />
+                                    {errors.registry && <div className="invalid-feedback">{errors.registry}</div>} {/* Exibe a mensagem de erro */}
                                 </div>
 
                                 <div className="mb-3">
@@ -353,6 +373,19 @@ export default function Professionals(){
                                         required
                                     />
                                     {errors.name && <div className="invalid-feedback">{errors.name}</div>} {/* Exibe a mensagem de erro */}
+                                </div>
+
+                                <div className="mb-3">
+                                    <input 
+                                        type="text" 
+                                        className={`form-control ${errors.registry ? 'is-invalid' : ''}`} 
+                                        name="registry"
+                                        placeholder="Registro"
+                                        onChange={handleInputChange}
+                                        value={formData.registry}
+                                        required
+                                    />
+                                    {errors.registry && <div className="invalid-feedback">{errors.registry}</div>} {/* Exibe a mensagem de erro */}
                                 </div>
 
                                 <div className="mb-3">

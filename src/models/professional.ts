@@ -7,6 +7,7 @@ export type ProfessionalDTO = {
     specialty: string,
     contact: string,
     email: string,
+    registry: string,
     schedulings: SchedulingDTO[],
     user: UserDTO | null,
 }
