@@ -74,6 +74,7 @@ export default function Scheduling(){
             specialty: '',
             email:'',
             contact: '',
+            registry:'',
             schedulings: [],
             user: null
         },
@@ -128,6 +129,7 @@ export default function Scheduling(){
                     specialty: '',
                     email:'',
                     contact: '',
+                    registry:'',
                     schedulings: [],
                     user: null
 
@@ -174,6 +176,7 @@ export default function Scheduling(){
                     id: thisProfessionalId, 
                     name: '',
                     specialty: '',
+                    registry:'',
                     email: '',
                     contact: '',
                     schedulings: [],
@@ -252,6 +255,7 @@ export default function Scheduling(){
                 name: '',
                 specialty: '',
                 contact: '',
+                registry:'',
                 email:'',
                 schedulings: [],
                 user: null
