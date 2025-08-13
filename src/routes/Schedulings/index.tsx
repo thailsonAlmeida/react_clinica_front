@@ -69,6 +69,7 @@ export default function Schedulings(){
                 name: '',
                 specialty: '',
                 email:'',
+                registry: '',
                 contact: '',
                 schedulings: [],
                 user: {
@@ -213,6 +214,7 @@ export default function Schedulings(){
                 name: '',
                 specialty: '',
                 email:'',
+                registry: '',
                 contact: '',
                 schedulings: [],
                 user: {
