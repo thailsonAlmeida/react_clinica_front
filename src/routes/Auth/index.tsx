@@ -2,7 +2,6 @@
 import logo from "../../assets/images/clinica_logo.svg";
 import "./style.css";
 import { useState } from "react";
-import { loginRequest } from "../../services/auth-service";
 import * as authService from "../../services/auth-service"
 import { BASE_URL_FRONT } from "../../utils/system";
 
@@ -37,21 +36,21 @@ export default function Auth() {
 }
 
   const handleLogin = async (e: { preventDefault: () => void; }) => {
-    e.preventDefault(); // Prevenir recarregamento da página
+    e.preventDefault();
     if (!validateForm()) {
-      alert("Preencha todos os campos obrigatórios.");
-      return;
+        alert("Preencha todos os campos obrigatórios.");
+        return;
     }
-    loginRequest(dataLogin)
-    event?.preventDefault();
-    authService.loginRequest(dataLogin).then(response => {
-        authService.saveAccessToken(response.data.token)
+
+    try {
+        const response = await authService.loginRequest(dataLogin);
+        authService.saveAccessToken(response.data.token);
         window.location.href = `${BASE_URL_FRONT}/dash`;
-    }).catch(error => {
-        console.log("Erro no login", error.message)
+    } catch (error: any) {
+        console.log("Erro no login", error.message);
         setError('Credenciais inválidas');
-    })
-  };
+    }
+};
 
   return (
     <>
