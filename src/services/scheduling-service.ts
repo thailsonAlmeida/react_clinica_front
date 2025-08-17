@@ -6,7 +6,7 @@ export function findAll(){
     const config : AxiosRequestConfig = {
         method: "GET",
         url: "/agendamentos",
-        withCredentials: true
+        
     }
     return requestBackend(config);
 }
@@ -23,7 +23,7 @@ export function findPageRequest(page: number, name: string, size = 100, sort = "
             ...(startDate && { startDate }), 
             ...(endDate && { endDate })
         },
-        withCredentials: true
+        
     }
     return requestBackend(config);
 }
@@ -33,7 +33,7 @@ export function update(schedulingId: number, data: any) {
         method: "PUT",
         url: `/agendamentos/${schedulingId}`,
         data: data,
-        withCredentials: true
+        
     }
     return requestBackend(config);
 }
@@ -42,7 +42,7 @@ export function cancelScheduling(schedulingId: number) {
     const config : AxiosRequestConfig = {
         method: "DELETE",
         url: `/agendamentos/${schedulingId}`,
-        withCredentials: true
+        
     }
     return requestBackend(config);
 }
@@ -52,7 +52,7 @@ export function post(schedulingData: any) {
         method: "POST",
         url: `/agendamentos`,
         data: schedulingData,
-        withCredentials: true
+        
     }
     return requestBackend(config);
 }
