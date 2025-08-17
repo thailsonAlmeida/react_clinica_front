@@ -4,7 +4,7 @@ import "./style.css";
 import { useState } from "react";
 import { loginRequest } from "../../services/auth-service";
 import * as authService from "../../services/auth-service"
-import { BASE_URL } from "../../utils/system";
+import { BASE_URL_FRONT } from "../../utils/system";
 
 type dataLogin = {
     login : string,
@@ -46,7 +46,7 @@ export default function Auth() {
     event?.preventDefault();
     authService.loginRequest(dataLogin).then(response => {
         authService.saveAccessToken(response.data.token)
-        window.location.href = `${BASE_URL}/dash`;
+        window.location.href = `${BASE_URL_FRONT}/dash`;
     }).catch(error => {
         console.log("Erro no login", error.message)
         setError('Credenciais inválidas');
