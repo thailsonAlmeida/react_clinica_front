@@ -1,8 +1,11 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { BASE_URL } from "./system";
-import * as authService from "../services/auth-service"
+import { getAccessToken } from "../services/auth-service";
+
+//import * as authService from "../services/auth-service"
 //import { history } from "./history";
 
+/*
 export function requestBackend(config: AxiosRequestConfig){
     const headers = config.withCredentials 
         ? {
@@ -13,6 +16,16 @@ export function requestBackend(config: AxiosRequestConfig){
         config.headers   
 
     return axios({...config, baseURL: BASE_URL, headers});
+}*/
+
+export function requestBackend(config: AxiosRequestConfig) {
+  const token = getAccessToken();
+
+  const headers = token
+    ? { ...config.headers, Authorization: `Bearer ${token}` }
+    : config.headers;
+
+  return axios({ ...config, baseURL: BASE_URL, headers });
 }
 
 axios.interceptors.request.use(
